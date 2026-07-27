@@ -11,12 +11,17 @@ export const identity = {
 	host: 'cyfrin',
 	role: 'Head of Engineering & Lead Developer',
 	company: 'Cyfrin',
-	location: 'Hamilton, Ontario',
+	location: 'Milton, Ontario',
 	tagline: 'I build and lead engineering teams that ship security products.',
+	sideRole: {
+		title: 'Co-host',
+		show: 'HTML All The Things',
+		href: 'https://www.htmlallthethings.com',
+		note: 'weekly since 2018, ~500 episodes',
+	},
 	intro: [
 		"I was Cyfrin's first engineering hire. I built the team, the platform, and most of the products running on it.",
 		'Six products, one monorepo, a small remote team, and a lot of Svelte.',
-		'I also co-host HTML All The Things — a weekly web dev podcast, ~500 episodes deep.',
 	],
 } as const;
 
@@ -204,16 +209,16 @@ export const practice: Practice[] = [
 		body: 'A high-traffic public platform in an adversarial space gets attacked. Worked with Vercel on initial mitigation, then designed our own protection layered on top. The attacks kept coming and stopped landing.',
 	},
 	{
-		title: 'The hard side of management',
-		body: 'The team had to shrink from its peak. I evaluated the org, made the calls on layoffs and separate performance-based cuts, delivered every conversation personally, and ran the entire offboarding — people, access, and equipment — because there was no HR or IT to hand it to.',
-	},
-	{
 		title: 'Culture that shipped features',
 		body: 'Internal hackathons run as both a morale reset and a real product pipeline — projects graduated into production platform features. Weekly show-and-tell to keep a distributed team connected to each other’s work.',
 	},
 	{
 		title: 'Sales engineering',
 		body: 'Cygent is a technical product sold to technical buyers, with no sales-engineering function to lean on. Ran live demos and technical Q&A on roughly thirty calls — sandboxing, permissions, integrations, the questions that decide whether a security company gives you repo access — converting half to trials. Then built the demo flow and materials so sales could run those calls without an engineer in the room.',
+	},
+	{
+		title: 'Engineering the go-to-market motion',
+		body: 'The other half of that job is building the machine instead of sitting in every call. Shipped the self-serve funnel that turns a Stripe checkout into a live, provisioned agent in seconds — no human in the loop. Built LLM pre-screening wired into customer ATSs, sponsorship pipelines with their own analytics, and course-launch tooling the education team runs without filing a ticket. Same pattern every time: sit in the revenue conversation, find the manual step, automate it, instrument it so you know whether it worked.',
 	},
 ];
 
@@ -284,6 +289,7 @@ export const podcast = {
 		'A podcast for developers navigating the modern web industry, with my co-host Matt Lawrence. We started it in 2018 partly to find community, and never stopped — web development, the AI-driven shifts in the industry, freelancing, and what it actually takes to build a career in this field.',
 	stats: [
 		{ value: '~500', label: 'episodes' },
+		{ value: '1M+', label: 'downloads' },
 		{ value: 'weekly', label: 'since 2018' },
 		{ value: '117', label: 'articles on DEV' },
 	],
@@ -299,12 +305,17 @@ export const podcast = {
 } as const;
 
 export const contact = [
-	{ label: 'email', value: 'mikhail@cyfrin.io', href: 'mailto:mikhail@cyfrin.io' },
+	{ label: 'email', value: 'mikhail.karan@gmail.com', href: 'mailto:mikhail.karan@gmail.com' },
 	{ label: 'github', value: 'mikhail-karan', href: 'https://github.com/mikhail-karan' },
 	{
 		label: 'linkedin',
 		value: 'mikhail-karan-hatt',
 		href: 'https://www.linkedin.com/in/mikhail-karan-hatt/',
+	},
+	{
+		label: 'podcast',
+		value: 'htmlallthethings.com',
+		href: 'https://www.htmlallthethings.com',
 	},
 	{ label: 'dev.to', value: 'mikehtmlallthethings', href: 'https://dev.to/mikehtmlallthethings' },
 	{ label: 'x', value: '@htmleverything', href: 'https://x.com/htmleverything' },

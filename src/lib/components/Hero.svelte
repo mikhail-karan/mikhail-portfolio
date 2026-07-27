@@ -14,16 +14,22 @@
 		<span class="faint">·</span> {identity.location}
 	</p>
 
+	<p class="role" style="--step: 3">
+		{identity.sideRole.title} <span class="faint">of</span>
+		<a href={identity.sideRole.href} rel="noreferrer">{identity.sideRole.show}</a>
+		<span class="faint">·</span> {identity.sideRole.note}
+	</p>
+
 	<div class="intro">
 		{#each identity.intro as line, i (line)}
-			<p style="--step: {3 + i}">
+			<p style="--step: {4 + i}">
 				<span class="bullet" aria-hidden="true">&gt;</span>
 				{line}
 			</p>
 		{/each}
 	</div>
 
-	<nav aria-label="Sections" style="--step: {3 + identity.intro.length}">
+	<nav aria-label="Sections" style="--step: {4 + identity.intro.length}">
 		<a href="#highlights">highlights</a>
 		<a href="#work">work</a>
 		<a href="#leading">leading</a>
