@@ -1,0 +1,166 @@
+/* Terminal-styled base. Monospace throughout, dark by default, light via prefers-color-scheme. */
+
+:root {
+	--bg: #0b0f10;
+	--bg-raised: #11171a;
+	--border: #1e2a2e;
+	--border-bright: #2f4249;
+	--fg: #d5e0e2;
+	--fg-dim: #8ba0a5;
+	--fg-faint: #5e7276;
+	--accent: #4ee38a;
+	--accent-dim: #2b8f58;
+	--warn: #e3c14e;
+	--link: #6fd3e3;
+
+	--mono:
+		ui-monospace, 'SF Mono', SFMono-Regular, 'Cascadia Mono', 'JetBrains Mono', 'Roboto Mono',
+		Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+	--measure: 74ch;
+	--gutter: clamp(1.25rem, 4vw, 3rem);
+	--rule: 1px;
+}
+
+/* Give the two-column rows room to breathe once there's screen for it. */
+@media (min-width: 68rem) {
+	:root {
+		--measure: 84ch;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--bg: #f4f6f5;
+		--bg-raised: #ffffff;
+		--border: #d6dedb;
+		--border-bright: #b3c0bc;
+		--fg: #14201f;
+		--fg-dim: #4d5f5c;
+		--fg-faint: #74857f;
+		--accent: #12794a;
+		--accent-dim: #1f9a60;
+		--warn: #8a6d0b;
+		--link: #0e6f80;
+	}
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: var(--mono);
+	font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+	line-height: 1.65;
+	font-variant-ligatures: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Faint terminal grid, cheap and static. */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	background-image: linear-gradient(var(--border) var(--rule), transparent var(--rule));
+	background-size: 100% 2rem;
+	opacity: 0.28;
+	mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+}
+
+h1,
+h2,
+h3 {
+	font-size: inherit;
+	font-weight: 700;
+	margin: 0;
+	line-height: 1.35;
+}
+
+p {
+	margin: 0;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	color: var(--link);
+	text-decoration: none;
+	border-bottom: var(--rule) solid transparent;
+	transition:
+		border-color 90ms linear,
+		color 90ms linear;
+}
+
+a:hover,
+a:focus-visible {
+	border-bottom-color: currentColor;
+}
+
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+}
+
+::selection {
+	background: var(--accent);
+	color: var(--bg);
+}
+
+.shell {
+	position: relative;
+	z-index: 1;
+	max-width: calc(var(--measure) + var(--gutter) * 2);
+	margin: 0 auto;
+	padding: 0 var(--gutter);
+}
+
+.dim {
+	color: var(--fg-dim);
+}
+
+.faint {
+	color: var(--fg-faint);
+}
+
+.accent {
+	color: var(--accent);
+}
+
+.skip-link {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+.skip-link:focus {
+	position: fixed;
+	left: var(--gutter);
+	top: 0.5rem;
+	z-index: 10;
+	width: auto;
+	height: auto;
+	clip-path: none;
+	padding: 0.5rem 0.75rem;
+	background: var(--bg-raised);
+	border: var(--rule) solid var(--accent);
+}
