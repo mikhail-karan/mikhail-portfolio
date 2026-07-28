@@ -280,7 +280,7 @@ export const experience: Role[] = [
 		body: 'Remote, on-call. Solana NFT project: designed the systems for on-chain interaction and built the TypeScript endpoints for wallet connection across web3 protocols, plus an app that let holders customize animated on-chain NFTs with items. Ran a team of developers and designers on async SCRUM, and fronted the dev updates to the community.',
 	},
 	{
-		org: 'Contentinq',
+		org: 'Contentlinq',
 		title: 'Technical Lead',
 		period: '2018 – 2021',
 		body: 'Contract, full-time. Designed the frontend systems and led a team of four developers and a designer, building applications in VueJS, Cordova, Flutter, JavaScript, and PHP for medium-to-large corporations deploying into secure environments.',
