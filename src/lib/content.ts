@@ -172,14 +172,12 @@ export const projects: Project[] = [
 	{
 		name: 'Jobs board',
 		period: '2025',
-		role: 'Rescued and delivered',
+		role: 'Led development',
 		summary:
-			'An end-to-end hiring platform tied to Cyfrin profiles: companies purchase and post jobs, candidates apply, an LLM pre-screens before handoff to the company ATS. It was off track; I stepped in late and drove it to an on-time launch.',
+			'An end-to-end hiring platform tied to Cyfrin profiles: companies purchase and post jobs, candidates apply, an LLM pre-screens before handoff to the company ATS.',
 		details: [
 			'Full purchasing workflow for companies posting jobs',
 			'LLM candidate pre-screening ahead of ATS handoff, with integrations syncing companies’ own listings into the board',
-			'Made the speed-vs-longevity calls, managed the tech debt deliberately, re-organized the work',
-			'Shipped on schedule. Traction was modest — the rescue and the trade-off management are the achievement, not the outcome',
 		],
 		stack: ['SvelteKit', 'Stripe', 'LLM screening', 'ATS integrations'],
 	},
@@ -267,6 +265,25 @@ export const experience: Role[] = [
 		period: '2018 → now',
 		body: 'Weekly web development podcast with Matt Lawrence. Nearly 500 episodes on web dev, AI, freelancing, and building a sustainable career in tech.',
 		href: 'https://www.htmlallthethings.com',
+	},
+	{
+		org: 'Molekule',
+		title: 'Senior Frontend Developer',
+		period: '2022 – 2023',
+		body: 'Contract, remote. Brought in to fix the e-commerce frontend and led the frontend team doing it — less UI friction, more sales. That worked, and the bottleneck moved to the backend, so I moved with it and joined that team too. Nuxt and Vue on the front, Magento behind it.',
+		href: 'https://molekule.com',
+	},
+	{
+		org: 'Solarians',
+		title: 'Project Lead Developer',
+		period: '2021 – 2022',
+		body: 'Remote, on-call. Solana NFT project: designed the systems for on-chain interaction and built the TypeScript endpoints for wallet connection across web3 protocols, plus an app that let holders customize animated on-chain NFTs with items. Ran a team of developers and designers on async SCRUM, and fronted the dev updates to the community.',
+	},
+	{
+		org: 'Contentinq',
+		title: 'Technical Lead',
+		period: '2018 – 2021',
+		body: 'Contract, full-time. Designed the frontend systems and led a team of four developers and a designer, building applications in VueJS, Cordova, Flutter, JavaScript, and PHP for medium-to-large corporations deploying into secure environments.',
 	},
 	{
 		org: 'Digital Dynasty Design',
