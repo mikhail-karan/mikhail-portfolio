@@ -172,14 +172,12 @@ export const projects: Project[] = [
 	{
 		name: 'Jobs board',
 		period: '2025',
-		role: 'Rescued and delivered',
+		role: 'Led development',
 		summary:
-			'An end-to-end hiring platform tied to Cyfrin profiles: companies purchase and post jobs, candidates apply, an LLM pre-screens before handoff to the company ATS. It was off track; I stepped in late and drove it to an on-time launch.',
+			'An end-to-end hiring platform tied to Cyfrin profiles: companies purchase and post jobs, candidates apply, an LLM pre-screens before handoff to the company ATS.',
 		details: [
 			'Full purchasing workflow for companies posting jobs',
 			'LLM candidate pre-screening ahead of ATS handoff, with integrations syncing companies’ own listings into the board',
-			'Made the speed-vs-longevity calls, managed the tech debt deliberately, re-organized the work',
-			'Shipped on schedule. Traction was modest — the rescue and the trade-off management are the achievement, not the outcome',
 		],
 		stack: ['SvelteKit', 'Stripe', 'LLM screening', 'ATS integrations'],
 	},
