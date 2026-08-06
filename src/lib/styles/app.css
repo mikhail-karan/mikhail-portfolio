@@ -143,6 +143,100 @@ a:focus-visible {
 	color: var(--accent);
 }
 
+/* Character-bar charts on /analytics. Shared here rather than per component, because the two
+   chart tables are the same object with different columns and drifting apart would show. */
+.chart {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.875em;
+	text-align: left;
+}
+
+.chart caption {
+	text-align: left;
+	padding-bottom: 0.5rem;
+	color: var(--fg-dim);
+}
+
+.chart caption::before {
+	content: '// ';
+	color: var(--accent);
+}
+
+.chart th,
+.chart td {
+	padding: 0.15rem 0.75rem 0.15rem 0;
+	font-weight: 400;
+	vertical-align: baseline;
+}
+
+.chart thead th {
+	color: var(--fg-faint);
+	border-bottom: var(--rule) solid var(--border);
+	padding-bottom: 0.35rem;
+}
+
+.chart .num {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+}
+
+/* The bar is decoration; the cell beside it carries the number. Fixed `ch` widths keep the
+   columns aligned in the monospace stack, and it prints as it renders. */
+.chart .bar {
+	color: var(--accent-dim);
+	white-space: pre;
+	letter-spacing: -0.05em;
+}
+
+.chart .label {
+	color: var(--fg);
+	max-width: 28ch;
+	overflow-wrap: anywhere;
+}
+
+.chart .day {
+	color: var(--fg);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+/* A day with no traffic is context for the days around it, not a data point of its own. */
+.chart .quiet .day,
+.chart .quiet .num {
+	color: var(--fg-faint);
+}
+
+.chart .sr {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+}
+
+.chart--buckets .num {
+	width: 7ch;
+}
+
+.chart--buckets .bar {
+	width: 20ch;
+}
+
+.chart--daily .num {
+	width: 8ch;
+}
+
+.chart--daily .bar {
+	width: 24ch;
+}
+
+@media print {
+	.chart .bar {
+		color: #000;
+	}
+}
+
 .skip-link {
 	position: absolute;
 	width: 1px;

@@ -18,7 +18,7 @@
 <main class="shell">
 	<header>
 		<Prompt command="./analytics --public" cursor />
-		<h1>Traffic</h1>
+		<h1>{analytics.heading}</h1>
 		<p class="blurb">{analytics.blurb}</p>
 	</header>
 
@@ -31,40 +31,36 @@
 		<ul class="totals">
 			<li>
 				<span class="value">{stats.views}</span>
-				<span class="faint">views</span>
+				<span class="faint">{analytics.totals.views}</span>
 			</li>
 			<li>
 				<span class="value">{stats.visitors}</span>
-				<span class="faint">visitors</span>
+				<span class="faint">{analytics.totals.visitors}</span>
 			</li>
 			<li>
 				<span class="value">{stats.botViews}</span>
-				<span class="faint">bot views</span>
+				<span class="faint">{analytics.totals.botViews}</span>
 			</li>
 			<li>
 				<span class="value">{stats.since ?? '—'}</span>
-				<span class="faint">counting since</span>
+				<span class="faint">{analytics.totals.since}</span>
 			</li>
 		</ul>
 
-		<p class="note faint">
-			A visitor is one identifier on one day. Two days of the same person count as two, which is
-			why there is no returning-visitor number below.
-		</p>
+		<p class="note faint">{analytics.visitorNote}</p>
 	</section>
 
 	<section aria-label="Charts">
 		<div class="charts">
-			<DailyChart caption="views and visitors per day, UTC" points={stats.daily} />
-			<BarTable caption="pages" labelHead="path" rows={stats.paths} />
-			<BarTable caption="where visits came from" labelHead="source" rows={stats.sources} />
-			<BarTable caption="countries" labelHead="country" rows={stats.countries} />
-			<BarTable caption="devices" labelHead="device" rows={stats.devices} />
+			<DailyChart caption={analytics.dailyCaption} points={stats.daily} />
+			{#each analytics.charts as chart (chart.key)}
+				<BarTable caption={chart.caption} labelHead={chart.labelHead} rows={stats[chart.key]} />
+			{/each}
 		</div>
 	</section>
 
 	<section aria-labelledby="method-heading">
-		<h2 id="method-heading"><span class="accent">how it works</span></h2>
+		<h2 id="method-heading"><span class="accent">{analytics.methodHeading}</span></h2>
 
 		<dl class="method">
 			{#each analytics.method as item (item.title)}
@@ -77,7 +73,7 @@
 	</section>
 
 	<section aria-labelledby="limits-heading">
-		<h2 id="limits-heading"><span class="accent">what these numbers are not</span></h2>
+		<h2 id="limits-heading"><span class="accent">{analytics.limitsHeading}</span></h2>
 
 		<ul class="limits">
 			{#each analytics.limits as limit (limit)}

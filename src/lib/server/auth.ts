@@ -10,6 +10,17 @@ export const PRIVATE_PATH = '/analytics/private';
 
 const REALM = 'analytics';
 
+/**
+ * Whether a request path belongs to the private tier.
+ *
+ * A prefix test, not equality: SvelteKit also serves the route's load data at
+ * `/analytics/private/__data.json`, and that URL returns the same unsuppressed payload as the
+ * page. Gating only the exact path would leave the data behind the gate reachable without it.
+ */
+export function isPrivateTier(pathname: string): boolean {
+	return pathname === PRIVATE_PATH || pathname.startsWith(`${PRIVATE_PATH}/`);
+}
+
 /** 401 with the challenge browsers need to prompt, and no caching of the rejection. */
 export function unauthorized(): Response {
 	return new Response('401 Unauthorized\n', {

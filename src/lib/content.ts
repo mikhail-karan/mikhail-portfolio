@@ -487,8 +487,27 @@ export const analytics = {
 		imageAlt:
 			'Terminal window reading: mikhail@cyfrin:~$ whoami — Mikhail Karan, Head of Engineering & Lead Developer at Cyfrin.',
 	} satisfies PageMeta,
+	heading: 'Traffic',
 	blurb:
 		'This site counts its own visitors. At this traffic volume the numbers are not the interesting part — the method is, so here it is alongside the evidence.',
+	/** Labels for the four headline figures, in the order the page renders them. */
+	totals: {
+		views: 'views',
+		visitors: 'visitors',
+		botViews: 'bot views',
+		since: 'counting since',
+	},
+	visitorNote:
+		'A visitor is one identifier on one day. Two days of the same person count as two, which is why there is no returning-visitor number below.',
+	dailyCaption: 'views and visitors per day, UTC',
+	/** `key` indexes the suppressed dimension buckets on PublicStats. */
+	charts: [
+		{ key: 'paths', caption: 'pages', labelHead: 'path' },
+		{ key: 'sources', caption: 'where visits came from', labelHead: 'source' },
+		{ key: 'countries', caption: 'countries', labelHead: 'country' },
+		{ key: 'devices', caption: 'devices', labelHead: 'device' },
+	],
+	methodHeading: 'how it works',
 	method: [
 		{
 			title: 'Nothing is stored on your device',
@@ -515,6 +534,7 @@ export const analytics = {
 			body: 'Vercel edge middleware writes one row per pageview through Neon’s HTTP driver. This page is regenerated at most once an hour, which is what keeps an unauthenticated public dashboard from being a free SQL endpoint.',
 		},
 	],
+	limitsHeading: 'what these numbers are not',
 	limits: [
 		'Time is never reported finer than one day, and there is no live feed.',
 		'These dimensions cannot be cross-filtered, on purpose.',

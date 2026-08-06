@@ -11,7 +11,7 @@
 
 import { next, waitUntil } from '@vercel/functions';
 
-import { isAuthorized, PRIVATE_PATH, unauthorized } from './src/lib/server/auth';
+import { isAuthorized, isPrivateTier, unauthorized } from './src/lib/server/auth';
 import { COLLECTED_PATHS, recordEvent } from './src/lib/server/collect';
 import { db } from './src/lib/server/db/client';
 import { saltCache } from './src/lib/server/salt';
@@ -20,15 +20,18 @@ import { createStore } from './src/lib/server/store';
 /**
  * Middleware bills per invocation, so this deliberately excludes `/_app/*` and every static
  * asset. Keep in sync with COLLECTED_PATHS in src/lib/server/collect.ts.
+ *
+ * The private tier is matched as a subtree rather than an exact path, because SvelteKit serves
+ * its load data at `/analytics/private/__data.json` and that has to be behind the same gate.
  */
 export const config = {
-	matcher: ['/', '/links', '/analytics', '/analytics/private'],
+	matcher: ['/', '/links', '/analytics', '/analytics/private', '/analytics/private/:path*'],
 };
 
 export default async function middleware(request: Request) {
 	const url = new URL(request.url);
 
-	if (url.pathname === PRIVATE_PATH) {
+	if (isPrivateTier(url.pathname)) {
 		if (!(await isAuthorized(request.headers, process.env.ANALYTICS_PRIVATE_AUTH))) {
 			return unauthorized();
 		}

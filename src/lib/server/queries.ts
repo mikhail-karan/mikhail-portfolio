@@ -65,7 +65,14 @@ export type PrivateStats = {
 
 const RECENT_LIMIT = 200;
 
-/** A Postgres text literal. These are module constants, but escaping costs nothing. */
+/**
+ * A Postgres text literal.
+ *
+ * Inlined rather than bound as a parameter because these appear inside `case … then …` and
+ * `coalesce(…)`, where an untyped parameter leaves Postgres unable to infer a result type.
+ * Every value passed here is a module constant or has already been validated by
+ * `sourcePattern`; the escaping is a second line rather than the only one.
+ */
 function lit(value: string): SQL {
 	return sql.raw(`'${value.replaceAll("'", "''")}'`);
 }

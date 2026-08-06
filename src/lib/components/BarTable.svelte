@@ -1,10 +1,10 @@
 <script lang="ts">
 	/**
-	 * A bar chart made of characters.
+	 * A dimension bucket chart made of characters.
 	 *
 	 * Marked up as a table because that is what it is — a screen reader gets labelled rows and
-	 * real numbers, and the bars are decoration on top. Widths are in `ch`, so the columns line
-	 * up in the monospace stack the rest of the site already uses, and it prints as it renders.
+	 * real numbers, and the bars are decoration on top. Shared table styling lives in
+	 * `app.css` under `.chart`; only what is specific to this chart is below.
 	 */
 
 	type Row = { label: string; views: number };
@@ -34,7 +34,7 @@
 {#if rows.length === 0}
 	<p class="faint empty">{empty}</p>
 {:else}
-	<table>
+	<table class="chart chart--buckets">
 		<caption>{caption}</caption>
 		<thead>
 			<tr>
@@ -47,7 +47,7 @@
 		<tbody>
 			{#each rows as row (row.label)}
 				<tr>
-					<th scope="row">{row.label}</th>
+					<th scope="row" class="label">{row.label}</th>
 					<td class="num">{row.views}</td>
 					<td class="num faint">{share(row.views, total)}</td>
 					<td class="bar" aria-hidden="true">{bar(row.views, max)}</td>
@@ -58,71 +58,7 @@
 {/if}
 
 <style>
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		font-size: 0.875em;
-		text-align: left;
-	}
-
-	caption {
-		text-align: left;
-		padding-bottom: 0.5rem;
-		color: var(--fg-dim);
-	}
-
-	caption::before {
-		content: '// ';
-		color: var(--accent);
-	}
-
-	th,
-	td {
-		padding: 0.15rem 0.75rem 0.15rem 0;
-		font-weight: 400;
-		vertical-align: baseline;
-	}
-
-	thead th {
-		color: var(--fg-faint);
-		border-bottom: var(--rule) solid var(--border);
-		padding-bottom: 0.35rem;
-	}
-
-	tbody th {
-		color: var(--fg);
-		max-width: 28ch;
-		overflow-wrap: anywhere;
-	}
-
-	.num {
-		text-align: right;
-		width: 7ch;
-		font-variant-numeric: tabular-nums;
-	}
-
-	.bar {
-		color: var(--accent-dim);
-		width: 20ch;
-		white-space: pre;
-		letter-spacing: -0.05em;
-	}
-
-	.sr {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-	}
-
 	.empty {
 		font-size: 0.875em;
-	}
-
-	@media print {
-		.bar {
-			color: #000;
-		}
 	}
 </style>

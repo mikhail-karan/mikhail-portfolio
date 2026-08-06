@@ -24,7 +24,7 @@
 
 	<section>
 		<h2>referrers, raw</h2>
-		<table>
+		<table class="chart chart--buckets">
 			<thead>
 				<tr><th scope="col">referrer</th><th scope="col" class="num">views</th></tr>
 			</thead>
@@ -40,7 +40,7 @@
 
 	<section>
 		<h2>paths</h2>
-		<table>
+		<table class="chart chart--buckets">
 			<thead>
 				<tr><th scope="col">path</th><th scope="col" class="num">views</th></tr>
 			</thead>
@@ -56,7 +56,7 @@
 
 	<section>
 		<h2>hourly</h2>
-		<table>
+		<table class="chart chart--buckets">
 			<thead>
 				<tr>
 					<th scope="col">hour (UTC)</th>
@@ -80,7 +80,7 @@
 
 	<section>
 		<h2>most recent {stats.recent.length}</h2>
-		<table>
+		<table class="chart chart--buckets">
 			<thead>
 				<tr>
 					<th scope="col">ts</th>
@@ -145,30 +145,9 @@
 		color: var(--accent);
 	}
 
-	table {
-		width: 100%;
-		border-collapse: collapse;
+	/* Base table styling comes from `.chart` in app.css; this tier is denser. */
+	:global(.chart) {
 		font-size: 0.8125em;
-		text-align: left;
-	}
-
-	th,
-	td {
-		padding: 0.15rem 0.75rem 0.15rem 0;
-		font-weight: 400;
-		vertical-align: baseline;
-	}
-
-	thead th {
-		color: var(--fg-faint);
-		border-bottom: var(--rule) solid var(--border);
-		padding-bottom: 0.35rem;
-	}
-
-	.num {
-		text-align: right;
-		width: 7ch;
-		font-variant-numeric: tabular-nums;
 	}
 
 	.nowrap {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { isAuthorized, unauthorized } from './auth';
+import { isAuthorized, isPrivateTier, unauthorized } from './auth';
 
 const CREDENTIALS = 'mikhail:correct-horse-battery-staple';
 
@@ -43,6 +43,28 @@ describe('isAuthorized', () => {
 	it('fails closed when no credentials are configured', async () => {
 		await expect(isAuthorized(basic(CREDENTIALS), undefined)).resolves.toBe(false);
 		await expect(isAuthorized(new Headers(), undefined)).resolves.toBe(false);
+	});
+});
+
+describe('isPrivateTier', () => {
+	it('covers the page itself', () => {
+		expect(isPrivateTier('/analytics/private')).toBe(true);
+		expect(isPrivateTier('/analytics/private/')).toBe(true);
+	});
+
+	it("covers the route's load data, which returns the same unsuppressed payload", () => {
+		expect(isPrivateTier('/analytics/private/__data.json')).toBe(true);
+		expect(isPrivateTier('/analytics/private//__data.json')).toBe(true);
+	});
+
+	it('leaves the public tier alone', () => {
+		expect(isPrivateTier('/analytics')).toBe(false);
+		expect(isPrivateTier('/analytics/__data.json')).toBe(false);
+		expect(isPrivateTier('/')).toBe(false);
+	});
+
+	it('does not gate a lookalike sibling route', () => {
+		expect(isPrivateTier('/analytics/private-notes')).toBe(false);
 	});
 });
 

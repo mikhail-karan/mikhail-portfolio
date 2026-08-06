@@ -1,32 +1,35 @@
 /**
- * Development-only stand-in for `middleware.ts` (§8.1).
+ * Two jobs, both delegating to code shared with `middleware.ts` (§8.1).
  *
- * `vite dev` does not run Vercel middleware, so without this nothing would be collected while
- * developing and `/analytics/private` would be open. It calls the same `recordEvent` and the
- * same auth check the middleware does — no second implementation.
+ * The private-tier gate runs in every environment. §10 puts enforcement in middleware and that
+ * is where the 401 is normally returned, at the edge, before a function is invoked — but the
+ * matcher is a routing rule, and an unsuppressed dataset should not be one routing rule away
+ * from public. This is the same `isAuthorized` check, one layer further in.
+ *
+ * Collection runs only in development, because `vite dev` does not execute Vercel middleware.
+ * In production the middleware has already recorded the request and doing it again here would
+ * double-count every pageview.
  */
 
 import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
 import type { Handle } from '@sveltejs/kit';
 
-import { isAuthorized, PRIVATE_PATH, unauthorized } from '$lib/server/auth';
+import { isAuthorized, isPrivateTier, unauthorized } from '$lib/server/auth';
 import { COLLECTED_PATHS, recordEvent } from '$lib/server/collect';
 import { db } from '$lib/server/db/client';
 import { saltCache } from '$lib/server/salt';
 import { createStore } from '$lib/server/store';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	if (!dev) return resolve(event);
-
-	if (event.url.pathname === PRIVATE_PATH) {
+	if (isPrivateTier(event.url.pathname)) {
 		if (!(await isAuthorized(event.request.headers, env.ANALYTICS_PRIVATE_AUTH))) {
 			return unauthorized();
 		}
 		return resolve(event);
 	}
 
-	if (COLLECTED_PATHS.has(event.url.pathname)) {
+	if (dev && COLLECTED_PATHS.has(event.url.pathname)) {
 		// Awaited rather than deferred: there is no `waitUntil` here, and a dev server has no
 		// latency budget worth protecting.
 		await recordEvent({
