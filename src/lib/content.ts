@@ -5,6 +5,8 @@
  * dashboard numbers. See the career-achievements repo for the sourced versions.
  */
 
+import type { IconName } from '$lib/icons';
+
 export const identity = {
 	name: 'Mikhail Karan',
 	handle: 'mikhail',
@@ -25,11 +27,30 @@ export const identity = {
 	],
 } as const;
 
-export const meta = {
+/** Canonical origin. The apex redirects here, so links and og:url use the www host. */
+export const site = {
+	url: 'https://www.mikek.me',
+} as const;
+
+export type PageMeta = {
+	title: string;
+	description: string;
+	/** Path on `site.url`, for canonical and og:url. */
+	path: string;
+	/** 1200×630 card in static/ — sources live in og/. */
+	image: string;
+	imageAlt: string;
+};
+
+export const meta: PageMeta = {
 	title: 'Mikhail Karan — Head of Engineering, Cyfrin',
 	description:
 		'Head of Engineering & Lead Developer at Cyfrin. First engineering hire turned eng lead across six web3 security products. Co-host of the HTML All The Things podcast.',
-} as const;
+	path: '/',
+	image: '/og.png',
+	imageAlt:
+		'Terminal window reading: mikhail@cyfrin:~$ whoami — Mikhail Karan, Head of Engineering & Lead Developer at Cyfrin.',
+};
 
 export type Highlight = {
 	title: string;
@@ -319,6 +340,135 @@ export const podcast = {
 		},
 		{ label: 'YouTube', href: 'https://www.youtube.com/channel/UCvvIv5sF75td95a3NC3atAw' },
 	],
+} as const;
+
+export type LinkEntry = {
+	icon: IconName;
+	label: string;
+	detail: string;
+	href: string;
+};
+
+export type LinkGroup = {
+	label: string;
+	note: string;
+	entries: LinkEntry[];
+};
+
+/** Everything the /links page renders — the link-in-bio destination. */
+export const links = {
+	meta: {
+		title: 'Mikhail Karan — links',
+		description:
+			'Every place to find Mikhail Karan: the HTML All The Things podcast, the show’s socials, code, writing, and how to get in touch.',
+		path: '/links',
+		image: '/og-links.png',
+		imageAlt:
+			'Terminal window reading: mikhail@cyfrin:~$ cat ~/links.json — Mikhail Karan, the podcast, the socials, the code, every link on one page.',
+	} satisfies PageMeta,
+	blurb:
+		'Head of Engineering at Cyfrin, co-host of HTML All The Things. Everything worth linking, one page.',
+	featured: {
+		label: podcast.name,
+		detail: 'Weekly web development podcast with Matt Lawrence. New episode every week since 2018.',
+		href: 'https://www.htmlallthethings.com',
+		/* Podcast numbers only — the DEV article count has its own row below. */
+		stats: podcast.stats.slice(0, 3),
+	},
+	groups: [
+		{
+			label: 'listen',
+			note: 'the podcast',
+			entries: [
+				{
+					icon: 'spotify',
+					label: 'Spotify',
+					detail: 'HTML All The Things',
+					href: 'https://open.spotify.com/show/2MWqU5ZbO69jy3RZ74wgdM',
+				},
+				{
+					icon: 'applepodcasts',
+					label: 'Apple Podcasts',
+					detail: 'HTML All The Things',
+					href: 'https://podcasts.apple.com/us/podcast/html-all-the-things-web-development-ai-and/id1412209136',
+				},
+				{
+					icon: 'youtube',
+					label: 'YouTube',
+					detail: '@htmlallthethings',
+					href: 'https://www.youtube.com/@htmlallthethings',
+				},
+				{
+					icon: 'rss',
+					label: 'Every episode',
+					detail: 'the full back catalogue',
+					href: 'https://www.htmlallthethings.com/landing/podcast',
+				},
+			],
+		},
+		{
+			label: 'follow',
+			note: 'the show',
+			entries: [
+				{ icon: 'x', label: 'X', detail: '@htmleverything', href: 'https://x.com/htmleverything' },
+				{
+					icon: 'instagram',
+					label: 'Instagram',
+					detail: '@htmlallthethings',
+					href: 'https://www.instagram.com/htmlallthethings/',
+				},
+				{
+					icon: 'tiktok',
+					label: 'TikTok',
+					detail: '@htmlallthethings',
+					href: 'https://www.tiktok.com/@htmlallthethings',
+				},
+				{
+					icon: 'twitch',
+					label: 'Twitch',
+					detail: 'live streams',
+					href: 'https://www.twitch.tv/htmlallthethings',
+				},
+				{
+					icon: 'patreon',
+					label: 'Patreon',
+					detail: 'support the show',
+					href: 'https://www.patreon.com/htmlallthethings',
+				},
+			],
+		},
+		{
+			label: 'me',
+			note: 'work, code, contact',
+			entries: [
+				{ icon: 'home', label: 'Portfolio', detail: 'what I build and lead', href: '/' },
+				{
+					icon: 'github',
+					label: 'GitHub',
+					detail: 'mikhail-karan',
+					href: 'https://github.com/mikhail-karan',
+				},
+				{
+					icon: 'linkedin',
+					label: 'LinkedIn',
+					detail: 'mikhail-karan-hatt',
+					href: 'https://www.linkedin.com/in/mikhail-karan-hatt/',
+				},
+				{
+					icon: 'devdotto',
+					label: 'DEV',
+					detail: '117 articles',
+					href: 'https://dev.to/mikehtmlallthethings',
+				},
+				{
+					icon: 'mail',
+					label: 'Email',
+					detail: 'mikhail.karan@gmail.com',
+					href: 'mailto:mikhail.karan@gmail.com',
+				},
+			],
+		},
+	] satisfies LinkGroup[],
 } as const;
 
 export const contact = [

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Contact from '$lib/components/Contact.svelte';
 	import Experience from '$lib/components/Experience.svelte';
+	import Head from '$lib/components/Head.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import Highlights from '$lib/components/Highlights.svelte';
 	import Podcast from '$lib/components/Podcast.svelte';
@@ -8,8 +9,12 @@
 	import Projects from '$lib/components/Projects.svelte';
 	import Section from '$lib/components/Section.svelte';
 	import Stack from '$lib/components/Stack.svelte';
-	import { identity } from '$lib/content';
+	import { identity, meta } from '$lib/content';
 </script>
+
+<Head page={meta} />
+
+<a class="skip-link" href="#highlights">Skip to content</a>
 
 <main class="shell">
 	<Hero />
@@ -44,7 +49,7 @@
 
 	<footer>
 		<p class="faint">
-			{identity.name} · {identity.location} · built with SvelteKit
+			{identity.name} · {identity.location} · <a href="/links">all my links</a> · built with SvelteKit
 		</p>
 	</footer>
 </main>

@@ -1,0 +1,159 @@
+/*
+ * Shared styles for the OG card sources. Same tokens as src/lib/styles/app.css,
+ * dark only — social previews don't get a colour-scheme preference.
+ */
+
+:root {
+	--bg: #0b0f10;
+	--bg-raised: #11171a;
+	--border: #1e2a2e;
+	--border-bright: #2f4249;
+	--fg: #d5e0e2;
+	--fg-dim: #8ba0a5;
+	--fg-faint: #5e7276;
+	--accent: #4ee38a;
+	--accent-dim: #2b8f58;
+
+	--mono:
+		ui-monospace, 'SF Mono', SFMono-Regular, 'Cascadia Mono', 'JetBrains Mono', 'Roboto Mono',
+		Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+body {
+	width: 1200px;
+	height: 630px;
+	overflow: hidden;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: var(--mono);
+	font-size: 22px;
+	line-height: 1.6;
+	font-variant-ligatures: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* The same faint terminal grid as the site. */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	background-image: linear-gradient(var(--border) 1px, transparent 1px);
+	background-size: 100% 32px;
+	opacity: 0.4;
+	mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+}
+
+.window {
+	position: relative;
+	height: 100%;
+	margin: 40px;
+	height: calc(100% - 80px);
+	border: 1px solid var(--border-bright);
+	background: color-mix(in oklab, var(--bg-raised) 88%, transparent);
+	display: flex;
+	flex-direction: column;
+}
+
+.bar {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 14px 24px;
+	border-bottom: 1px solid var(--border);
+	font-size: 19px;
+	color: var(--fg-faint);
+}
+
+.bar .url {
+	color: var(--accent-dim);
+}
+
+.body {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	padding: 40px 48px 40px;
+}
+
+/* Centre the block in the space the footer leaves. */
+.stack {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.prompt {
+	font-size: 21px;
+	color: var(--fg-dim);
+	white-space: nowrap;
+}
+
+.prompt .who {
+	color: var(--accent-dim);
+}
+
+.prompt .sigil {
+	color: var(--accent);
+}
+
+.cursor {
+	display: inline-block;
+	width: 0.55em;
+	height: 1em;
+	margin-left: 0.15em;
+	background: var(--accent);
+	vertical-align: text-bottom;
+}
+
+h1 {
+	margin-top: 14px;
+	font-size: 82px;
+	font-weight: 700;
+	letter-spacing: -0.035em;
+	line-height: 1.05;
+}
+
+.lead {
+	margin-top: 18px;
+	font-size: 26px;
+	color: var(--fg-dim);
+}
+
+.sub {
+	margin-top: 8px;
+	font-size: 22px;
+	color: var(--fg-faint);
+}
+
+.foot {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+	padding-top: 22px;
+	border-top: 1px solid var(--border);
+	font-size: 20px;
+	color: var(--fg-faint);
+}
+
+.foot .accent {
+	color: var(--accent);
+}
+
+.icons {
+	display: flex;
+	align-items: center;
+	gap: 22px;
+	margin-top: 30px;
+}
+
+.icons svg {
+	width: 34px;
+	height: 34px;
+	fill: var(--fg-dim);
+}
