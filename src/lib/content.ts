@@ -471,6 +471,78 @@ export const links = {
 	] satisfies LinkGroup[],
 } as const;
 
+/**
+ * Everything /analytics renders except the numbers themselves.
+ *
+ * The page is a writeup that happens to have live figures in it, not a dashboard with a
+ * disclaimer bolted on, so the method and the limits are content — see docs/analytics-spec.md.
+ */
+export const analytics = {
+	meta: {
+		title: 'Traffic — Mikhail Karan',
+		description:
+			'How this site counts its own traffic: no cookies, no third-party analytics, no JavaScript in the page, and a visitor identifier that stops existing at midnight. With the live numbers.',
+		path: '/analytics',
+		image: '/og.png',
+		imageAlt:
+			'Terminal window reading: mikhail@cyfrin:~$ whoami — Mikhail Karan, Head of Engineering & Lead Developer at Cyfrin.',
+	} satisfies PageMeta,
+	heading: 'Traffic',
+	blurb:
+		'This site counts its own visitors. At this traffic volume the numbers are not the interesting part — the method is, so here it is alongside the evidence.',
+	/** Labels for the four headline figures, in the order the page renders them. */
+	totals: {
+		views: 'views',
+		visitors: 'visitors',
+		botViews: 'bot views',
+		since: 'counting since',
+	},
+	visitorNote:
+		'A visitor is one identifier on one day. Two days of the same person count as two, which is why there is no returning-visitor number below.',
+	dailyCaption: 'views and visitors per day, UTC',
+	/** `key` indexes the suppressed dimension buckets on PublicStats. */
+	charts: [
+		{ key: 'paths', caption: 'pages', labelHead: 'path' },
+		{ key: 'sources', caption: 'where visits came from', labelHead: 'source' },
+		{ key: 'countries', caption: 'countries', labelHead: 'country' },
+		{ key: 'devices', caption: 'devices', labelHead: 'device' },
+	],
+	methodHeading: 'how it works',
+	method: [
+		{
+			title: 'Nothing is stored on your device',
+			body: 'No cookies, no localStorage, and no analytics script. The count happens at the edge, before this page is served, so an ad blocker changes nothing about what is recorded — and there is nothing on your machine to consent to.',
+		},
+		{
+			title: 'The identifier expires at midnight',
+			body: 'A visitor is a SHA-256 of a random 32-byte daily salt plus host, IP address and user agent. The raw IP is never written down. The salt is generated once per UTC day and destroyed when the day rolls over, so yesterday’s identifiers cannot be recomputed by anyone — me included.',
+		},
+		{
+			title: 'Which means returning visitors are uncountable',
+			body: 'The same person on two days is two unrelated identifiers. There is no way to join them, so there is no returning-visitor number here. That is a consequence of the design, not an omission.',
+		},
+		{
+			title: 'Small numbers are collapsed before they leave the database',
+			body: 'Any bucket with fewer than five views is folded into “Other”, and that happens in SQL — a suppressed value never reaches this page in any form. At this traffic volume, an unsuppressed public dashboard would just be publishing individual browsing sessions.',
+		},
+		{
+			title: 'Referrers are checked against an allowlist',
+			body: 'A referrer is reduced to its registrable domain and reported only if that domain is somewhere already public. Everything else — including anything unrecognised — is reported as “Direct / private”, because raw referrers can carry links to private wikis, workspaces and hiring systems.',
+		},
+		{
+			title: 'One SvelteKit app, one Postgres, no vendor',
+			body: 'Vercel edge middleware writes one row per pageview through Neon’s HTTP driver. This page is regenerated at most once an hour, which is what keeps an unauthenticated public dashboard from being a free SQL endpoint.',
+		},
+	],
+	limitsHeading: 'what these numbers are not',
+	limits: [
+		'Time is never reported finer than one day, and there is no live feed.',
+		'These dimensions cannot be cross-filtered, on purpose.',
+		'Bot detection is best-effort pattern matching. Some crawlers are counted as people and some people are counted as crawlers.',
+		'No identifier is retained past 30 days. That is the specific claim — the event log itself is kept, and referrer URLs are kept with it, visible only to me.',
+	],
+} as const;
+
 export const contact = [
 	{ label: 'email', value: 'mikhail.karan@gmail.com', href: 'mailto:mikhail.karan@gmail.com' },
 	{ label: 'github', value: 'mikhail-karan', href: 'https://github.com/mikhail-karan' },

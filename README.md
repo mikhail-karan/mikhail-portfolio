@@ -1,26 +1,35 @@
 # mikhail-portfolio
 
-Personal portfolio — a terminal-styled site built with SvelteKit and prerendered to
-static files. Two pages: the portfolio at `/` and a link-in-bio page at `/links`.
+Personal portfolio — a terminal-styled site built with SvelteKit. The content pages
+are prerendered to static files: the portfolio at `/` and a link-in-bio page at
+`/links`. `/analytics` is server-rendered and publishes the site's own traffic, which
+the site also collects itself — see [Analytics](#analytics).
 
 ## Running it
 
 ```sh
 pnpm install
-pnpm dev        # dev server
-pnpm build      # static build → build/
-pnpm preview    # serve the built site
-pnpm check      # svelte-check + types
-pnpm lint       # oxlint
-pnpm format     # oxfmt
+pnpm dev          # dev server
+pnpm build        # production build
+pnpm preview      # serve the built site
+pnpm check        # svelte-check + types
+pnpm test         # vitest
+pnpm lint         # oxlint
+pnpm format       # oxfmt
+pnpm db:generate  # drizzle-kit — regenerate migrations from the schema
+pnpm db:migrate   # drizzle-kit — apply them to $DATABASE_URL
 ```
+
+Copy `.env.example` to `.env` for local development. Without `DATABASE_URL` the site
+still runs; collection logs a failure per request and `/analytics` errors.
 
 ## Where the content lives
 
-Everything on both pages comes from `src/lib/content.ts` — identity, highlights,
-projects, leadership entries, stack, experience, podcast, contact, and the `links`
-object behind `/links`. Editing that file is the whole content workflow; no
-component changes needed to update copy.
+All page copy comes from `src/lib/content.ts` — identity, highlights, projects,
+leadership entries, stack, experience, podcast, contact, the `links` object behind
+`/links`, and the `analytics` object holding the writeup on `/analytics`. Editing
+that file is the whole content workflow; no component changes needed to update copy.
+The only thing not in there is the analytics figures, which come from the database.
 
 `/links` is the link-in-bio page (it replaced a hosted Linktree-style page). Adding
 a link means adding an entry to a group in `links.groups`; its `icon` has to be a
@@ -46,12 +55,18 @@ src/
 │   ├── icons.ts                ← inlined brand marks for /links
 │   ├── actions/reveal.ts       ← fade-in-on-scroll, once, then disconnects
 │   ├── components/             ← Hero, Section, Prompt, Head, Icon + one per section
+│   ├── server/                 ← collector, salt, queries, retention (never bundled)
 │   └── styles/app.css          ← design tokens and base layer
+├── hooks.server.ts             ← dev-only stand-in for middleware.ts
 └── routes/
     ├── +layout.svelte          ← favicon, theme colour, og:type, twitter:card
     ├── +layout.ts              ← prerender = true
     ├── +page.svelte            ← composes the sections
-    └── links/+page.svelte      ← /links, the link-in-bio page
+    ├── links/+page.svelte      ← /links, the link-in-bio page
+    ├── analytics/              ← /analytics (ISR) and /analytics/private (no-store)
+    └── api/cron/sweep/         ← daily retention job
+middleware.ts                   ← edge: collection + private-tier Basic Auth
+drizzle/                        ← generated migrations
 ```
 
 Each page renders `Head.svelte` with its own `PageMeta` — title, description,
@@ -68,11 +83,56 @@ everywhere.
   it is disabled under `prefers-reduced-motion`, and sections stay visible when
   JavaScript is unavailable or when printing.
 
+## Analytics
+
+The site counts its own traffic instead of using a third-party provider. The full
+design, including the alternatives that were rejected, is in
+[`docs/analytics-spec.md`](docs/analytics-spec.md). In short:
+
+- Edge middleware writes one row per pageview to Neon Postgres through drizzle's
+  HTTP driver, deferred with `waitUntil` so it never delays a response.
+- A visitor is `sha256(daily salt || host || ip || user agent)`. The raw IP is never
+  stored, and the salt is destroyed when the day rolls over, so yesterday's
+  identifiers cannot be recomputed. Nothing is written to the visitor's device, so
+  there is no consent banner and no cookie.
+- `/analytics` is public and suppressed: buckets under five views collapse into
+  `Other`, referrers must match an allowlist of registrable domains or they are
+  reported as `Direct / private`, and time is never finer than a day. All of it
+  happens in SQL — see `src/lib/server/queries.ts`.
+- `/analytics/private` is the same data unsuppressed, behind HTTP Basic Auth
+  enforced in `middleware.ts`, `no-store`, `noindex`, and disallowed in `robots.txt`.
+- `/api/cron/sweep` runs daily and nulls user agents older than 30 days. Events are
+  never deleted. Referrer URLs are kept indefinitely and stay private.
+
+Collection logic lives in `src/lib/server/collect.ts` and is called from two places:
+`middleware.ts` in production and `src/hooks.server.ts` in `vite dev`, because
+`vite dev` does not run Vercel middleware. There is no second implementation.
+
+`pnpm test` runs the collector and auth tests with no database. The query-layer
+tests need one and skip without it:
+
+```sh
+DATABASE_URL='postgres://…/neondb?sslmode=require' pnpm test
+```
+
+Point that at a scratch Neon branch — the suite truncates the tables it uses.
+
 ## Deploying to Vercel
 
-`@sveltejs/adapter-static` detects Vercel via the `VERCEL` environment variable and
-writes `.vercel/output` with a config that sets immutable caching on hashed assets.
-No `vercel.json` is needed — import the repo and Vercel's SvelteKit preset handles it.
+`@sveltejs/adapter-vercel` writes `.vercel/output`, keeping `/` and `/links` as static
+files and adding functions for `/analytics`, `/analytics/private` and the cron route.
+`vercel.json` **is** required now: it declares the daily cron. Vercel builds root
+`middleware.ts` itself.
+
+Set these in the project's environment variables:
+
+| variable | what it does |
+|---|---|
+| `DATABASE_URL` | Neon connection string |
+| `ANALYTICS_PRIVATE_AUTH` | `user:password` for `/analytics/private` |
+| `CRON_SECRET` | Vercel sends it as a bearer token to `/api/cron/sweep` |
+
+Run `pnpm db:migrate` against the production database once before the first deploy.
 
 ## Before going live
 

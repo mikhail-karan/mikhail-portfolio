@@ -49,7 +49,8 @@
 
 	<footer>
 		<p class="faint">
-			{identity.name} · {identity.location} · <a href="/links">all my links</a> · built with SvelteKit
+			{identity.name} · {identity.location} · <a href="/links">all my links</a> ·
+			<a href="/analytics">traffic</a> · built with SvelteKit
 		</p>
 	</footer>
 </main>
