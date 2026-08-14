@@ -22,7 +22,7 @@ export const identity = {
 		note: 'weekly since 2018, ~500 episodes',
 	},
 	intro: [
-		"I was Cyfrin's first engineering hire. I built the team, the platform, and most of the products running on it.",
+		"Cyfrin's first engineering hire. I built the team, the platform, and most of the products on it.",
 		'Six products, one monorepo, a small remote team, and a lot of Svelte.',
 	],
 } as const;
@@ -60,27 +60,27 @@ export type Highlight = {
 export const highlights: Highlight[] = [
 	{
 		title: 'First engineer → Head of Engineering',
-		body: 'Joined as hire #1 with no engineering org to inherit. Grew and led a fully remote, async-first team of roughly nine across six concurrent products — hiring, on-call, delivery, and the hard conversations included.',
+		body: 'Hire #1, no engineering org to inherit. Grew and led a remote, async-first team of nine across six concurrent products — hiring, on-call, delivery, and the hard conversations.',
 	},
 	{
 		title: 'Six products, built or led every one',
-		body: 'A competitive audit platform, an education platform, unified identity/SSO, an acquired vulnerability database, a jobs board, and an AI security agent — all on one Turborepo monorepo.',
+		body: 'Competitive audits, education, unified SSO, an acquired vulnerability database, a jobs board, and an AI security agent — one Turborepo monorepo.',
 	},
 	{
 		title: 'Designed to run itself',
-		body: 'Tens of thousands of active users on a platform that needs roughly one bug fix a quarter. Self-serve pipelines for non-engineers instead of tickets that route through engineering.',
+		body: 'Tens of thousands of active users, roughly one bug fix a quarter. Non-engineers ship through self-serve pipelines instead of tickets.',
 	},
 	{
 		title: 'AI in production, not in a deck',
-		body: 'Led Cygent from first commit to paying customers in about seven months: per-tenant sandboxed agents, blue-green orchestration, self-serve provisioning, and the eval work to know it actually got better.',
+		body: 'Cygent, first commit to paying customers in seven months: per-tenant sandboxed agents, blue-green orchestration, self-serve provisioning, and the evals to know it got better.',
 	},
 	{
 		title: 'Security is the job, not a checklist',
-		body: 'Owned SOC 2 Type II solo, end to end. Turned ad-hoc white-hat reports into a standing pen-test program. Incident commander for every severe incident, with a retro every single time.',
+		body: 'SOC 2 Type II owned solo. Ad-hoc white-hat reports turned into a standing pen-test program. Incident commander on every severe incident, retro every time.',
 	},
 	{
 		title: '~500 episodes and counting',
-		body: 'Co-host of HTML All The Things since 2018 — weekly conversations about web development, AI, and building a career in this industry. Still shipping every week.',
+		body: 'Co-host of HTML All The Things since 2018 — weekly, on web development, AI, and building a career in this industry.',
 	},
 ];
 
@@ -115,15 +115,15 @@ export const projects: Project[] = [
 		period: '2025 → now',
 		role: 'Engineering lead',
 		summary:
-			'An AI security engineer a company hires like a team member — it joins your Slack, Discord, Telegram, GitHub and Linear, builds context on your codebase continuously, flags smart-contract foot-guns during development, and runs full audits.',
+			'An AI security engineer you hire like a team member. It joins Slack, Discord, Telegram, GitHub and Linear, builds context on your codebase, flags smart-contract foot-guns during development, and runs full audits.',
 		details: [
-			'Security-hardened agentic system: one isolated, sandboxed Docker environment per agent, each with its own compute and privileges, running 24/7',
-			'Orchestrator handling per-tenant instance lifecycle — provisioning, health checks, blue-green deploys, webhook routing, multi-host',
-			'Self-serve portal: Stripe purchase to a provisioned agent in seconds',
-			'Agentic tool loop with engagement scoring, conversation state, and a per-user memory system',
-			'Custom Postgres primitives — job queue, KV with TTL, and vector search — instead of three more vendors',
+			'One isolated, sandboxed Docker environment per agent — own compute, own privileges, running 24/7',
+			'Orchestrator for per-tenant lifecycle: provisioning, health checks, blue-green deploys, webhook routing',
+			'Self-serve portal — Stripe checkout to a provisioned agent in seconds',
+			'Agentic tool loop with engagement scoring, conversation state, and per-user memory',
+			'Custom Postgres primitives — job queue, KV with TTL, vector search — instead of three more vendors',
 			'Auto pen-test "battle system": red/blue team exploit testing in ephemeral sandboxes',
-			'From first commit to paying customers in ~7 months',
+			'First commit to paying customers in ~7 months',
 		],
 		stack: [
 			'Bun',
@@ -149,13 +149,13 @@ export const projects: Project[] = [
 		period: '2023 → now',
 		role: 'Led development',
 		summary:
-			'The leading web3 education platform — fully custom, not an off-the-shelf LMS. Tens of thousands of active users and consistent monthly signups with essentially no marketing spend.',
+			'The leading web3 education platform — fully custom, not an off-the-shelf LMS. Tens of thousands of active users on essentially no marketing spend.',
 		details: [
-			'Video player built bottom-to-top, with delivery and analytics through Mux',
-			'Course progression engine handling mixed video and written lessons, plus a custom quiz system',
-			'Fully proctored certification flow with payments — industry certifications that generate direct revenue',
+			'Video player built bottom-to-top, delivery and analytics through Mux',
+			'Course progression engine for mixed video and written lessons, plus a custom quiz system',
+			'Proctored certification flow with payments — industry certs that generate direct revenue',
 			'Video-level and platform-level sponsorships with their own analytics pipelines',
-			'Self-serve course-launching pipeline so the education team ships courses without engineering',
+			'Self-serve course launching, so the education team ships without engineering',
 		],
 		stack: [
 			'SvelteKit',
@@ -181,12 +181,12 @@ export const projects: Project[] = [
 		period: '2023 → now',
 		role: 'Built from zero as first engineering hire',
 		summary:
-			"Cyfrin's first product bet and the reason I was hired: a competitive audit platform where companies post codebases as contests and independent security researchers compete to find vulnerabilities for rewards.",
+			"Cyfrin's first product bet and the reason I was hired: companies post codebases as contests, independent security researchers compete to find vulnerabilities for rewards.",
 		details: [
-			'Contest dashboard covering codebase analysis through findings submission',
-			'From-scratch judging system for evaluating every finding — validity, severity, duplicates',
-			'Automated rewards calculator computing payout splits across finding counts, severity, and duplicates',
-			'Hired the first additional engineer within months and moved into a tech-lead role on the product',
+			'Contest dashboard from codebase analysis through findings submission',
+			'From-scratch judging system for every finding — validity, severity, duplicates',
+			'Rewards calculator computing payout splits across finding counts, severity, and duplicates',
+			'Hired the first additional engineer within months, then moved into tech lead on the product',
 		],
 		stack: ['SvelteKit', 'TypeScript', 'tRPC', 'TanStack Query', 'Prisma', 'Postgres', 'Vercel'],
 		href: 'https://codehawks.cyfrin.io',
@@ -203,11 +203,11 @@ export const projects: Project[] = [
 		period: '2024',
 		role: 'Solo migration',
 		summary:
-			'An acquired React app — a searchable database of smart contract vulnerabilities aggregated from audit reports across the industry. I rebuilt and migrated it single-handedly.',
+			'An acquired React app — a searchable database of smart contract vulnerabilities pulled from audit reports across the industry. I rebuilt and migrated it single-handedly.',
 		details: [
-			'Rebuilt backend and frontend from the ground up, React → SvelteKit',
+			'Backend and frontend rebuilt from the ground up, React → SvelteKit',
 			'Wired into the shared profiles/SSO system',
-			'Custom scrapers per audit firm to ingest vulnerability reports, plus a GitHub-based submission pipeline for firms to submit their own',
+			'Per-firm scrapers ingesting vulnerability reports, plus a GitHub submission pipeline for firms',
 			'Done pre-agentic-AI — hand-written, ChatGPT-era at best',
 		],
 		stack: ['SvelteKit', 'TypeScript', 'tRPC', 'Prisma', 'web scraping', 'ingestion pipelines'],
@@ -225,7 +225,7 @@ export const projects: Project[] = [
 		period: '2024',
 		role: 'Architected, managed the owning engineer',
 		summary:
-			'Four separate apps became one platform. A standalone profiles application acting as the SSO/identity hub for the whole ecosystem — log in once, logged in everywhere.',
+			'Four separate apps became one platform. A standalone profiles app as the SSO hub for the whole ecosystem — log in once, logged in everywhere.',
 		details: [
 			'One account across education, competitive audits, vulnerability research, and jobs',
 			'Dedicated profiles service and schema behind it',
@@ -245,10 +245,10 @@ export const projects: Project[] = [
 		period: '2025',
 		role: 'Led development',
 		summary:
-			'An end-to-end hiring platform tied to Cyfrin profiles: companies purchase and post jobs, candidates apply, an LLM pre-screens before handoff to the company ATS.',
+			'A hiring platform tied to Cyfrin profiles: companies buy and post jobs, candidates apply, an LLM pre-screens before handoff to the company ATS.',
 		details: [
 			'Full purchasing workflow for companies posting jobs',
-			'LLM candidate pre-screening ahead of ATS handoff, with integrations syncing companies’ own listings into the board',
+			'Integrations syncing companies’ own listings into the board',
 		],
 		stack: ['SvelteKit', 'Stripe', 'LLM screening', 'ATS integrations'],
 	},
@@ -274,8 +274,8 @@ export const sideProjects: SideProject[] = [
 		name: 'Elevator Operator',
 		status: 'playable',
 		summary:
-			'A browser game where you are the elevator. Passengers spawn on floors with a destination and a patience meter, and you decide where the car goes — batch the pickups well or eat a strike when someone gives up waiting.',
-		note: 'The simulation is a pure, deterministic, tick-based module with no DOM or canvas imports: tick(state, commands, dt) returns the next state plus the events that happened. That keeps the game logic unit-tested and the renderer swappable. Canvas 2D, seeded RNG, zero runtime dependencies.',
+			'A browser game where you are the elevator. Passengers spawn with a destination and a patience meter — batch the pickups well or eat a strike when someone gives up waiting.',
+		note: 'The simulation is a pure, deterministic, tick-based module with no DOM imports: tick(state, commands, dt) returns the next state and the events. Game logic stays unit-tested, the renderer stays swappable. Canvas 2D, seeded RNG, zero runtime dependencies.',
 		stack: ['TypeScript', 'Vite', 'Canvas 2D', 'Vitest', 'no runtime deps'],
 		href: 'https://elevator-operator.mikek.me',
 		shot: {
@@ -290,8 +290,8 @@ export const sideProjects: SideProject[] = [
 		name: 'Language Learner',
 		status: 'invite-only, in use',
 		summary:
-			'A voice tutor built for one person — a Russian speaker learning elementary English talks to an AI tutor out loud, and gets a written review of the conversation afterwards.',
-		note: 'OpenAI Realtime over WebRTC, with the audio going straight from the browser to OpenAI and the server only doing signalling. Sessions persist transcripts, a learner profile, and corrections that feed the next warm-up. Installable as a PWA whose service worker caches the shell and never the transcripts. Tests apply the real migrations to an in-process PGlite database, so what they run against and what deploys to Neon cannot drift.',
+			'A voice tutor built for one person — a Russian speaker learning elementary English talks to an AI tutor out loud, and gets a written review afterwards.',
+		note: 'OpenAI Realtime over WebRTC: audio goes browser to OpenAI, the server only signals. Sessions persist transcripts, a learner profile, and corrections that feed the next warm-up. Tests apply the real migrations to an in-process PGlite database, so they cannot drift from what deploys to Neon.',
 		stack: [
 			'SvelteKit',
 			'TypeScript',
@@ -315,8 +315,8 @@ export const sideProjects: SideProject[] = [
 		name: 'Drain',
 		status: 'prototype',
 		summary:
-			'A macOS menu bar app that tells you why the battery is draining. It exists because I lost 20% in an hour to a runaway node process and two editor extension hosts, and nothing surfaced it — Activity Monitor only helps once you already suspect something.',
-		note: 'Samples power draw through IOPowerSources, per-process CPU and memory through proc_pidinfo, and compressor pressure through host_statistics64. When the thresholds hold for a minute it fires one notification with Kill, Snooze and Ignore this app on it. The rest of the time it says nothing, which is the actual feature.',
+			'A macOS menu bar app that tells you why the battery is draining. I lost 20% in an hour to a runaway node process and two editor extension hosts, and nothing surfaced it.',
+		note: 'Samples power draw through IOPowerSources, per-process CPU and memory through proc_pidinfo, compressor pressure through host_statistics64. When the thresholds hold for a minute it fires one notification with Kill, Snooze and Ignore on it. The rest of the time it says nothing, which is the actual feature.',
 		stack: ['Swift', 'SwiftUI', 'IOKit', 'macOS'],
 	},
 ];
@@ -330,31 +330,31 @@ export type Practice = {
 export const practice: Practice[] = [
 	{
 		title: 'SOC 2 Type II, owned solo',
-		body: 'Enterprise deals for an AI agent need it — nobody hands a bot their repos and Slack without one. Cyfrin had no compliance function, no HR, no IT, so the whole program needed a single owner. Stood it up, drove the company to audit-ready in about two months, then through the observation window and the audit itself. Certified with zero findings, alongside leading engineering.',
+		body: 'Nobody hands a bot their repos and Slack without it, and Cyfrin had no compliance function, no HR, no IT. Stood the program up, drove the company to audit-ready in two months, then through the observation window and the audit. Certified with zero findings, alongside leading engineering.',
 	},
 	{
 		title: 'Incident command',
-		body: 'Led every severe-issue war room over three years: called it, coordinated the response, handled messaging, delegated workstreams, and closed with a retrospective every time. Hot-fixes inside the hour — a self-inflicted API stampede diagnosed and patched 33 minutes after the first user report. No war room ever repeated a root cause.',
+		body: 'Led every severe-issue war room over three years: called it, coordinated the response, handled messaging, ran the retro. Hot-fixes inside the hour — a self-inflicted API stampede patched 33 minutes after the first user report. No root cause ever repeated.',
 	},
 	{
 		title: 'A continuous pen-test program',
-		body: 'White-hat researchers were reporting issues organically, so I turned those relationships into a standing group continuously attacking our platforms, paid per bug. Every new app shipped got the same adversarial treatment. A grey-box assessment of the agent container isolation surfaced critical escape vectors — in the dev environment, before any customer exposure.',
+		body: 'Turned organic white-hat reports into a standing group attacking our platforms, paid per bug. Every new app got the same treatment. A grey-box assessment of the agent container isolation surfaced critical escape vectors — in dev, before any customer exposure.',
 	},
 	{
 		title: 'DDoS mitigation that held',
-		body: 'A high-traffic public platform in an adversarial space gets attacked. Worked with Vercel on initial mitigation, then designed our own protection layered on top. The attacks kept coming and stopped landing.',
+		body: 'A high-traffic public platform in an adversarial space gets attacked. Mitigated with Vercel, then designed our own protection on top. The attacks kept coming and stopped landing.',
 	},
 	{
 		title: 'Culture that shipped features',
-		body: 'Internal hackathons run as both a morale reset and a real product pipeline — projects graduated into production platform features. Weekly show-and-tell to keep a distributed team connected to each other’s work.',
+		body: 'Internal hackathons as both morale reset and product pipeline — projects graduated into production platform features. Weekly show-and-tell to keep a distributed team connected.',
 	},
 	{
 		title: 'Sales engineering',
-		body: 'Cygent is a technical product sold to technical buyers, with no sales-engineering function to lean on. Ran live demos and technical Q&A on roughly thirty calls — sandboxing, permissions, integrations, the questions that decide whether a security company gives you repo access — converting half to trials. Then built the demo flow and materials so sales could run those calls without an engineer in the room.',
+		body: 'Cygent is a technical product sold to technical buyers, with no sales-engineering function to lean on. Ran demos and technical Q&A on ~30 calls — sandboxing, permissions, integrations, the questions that decide whether a security company gives you repo access — converting half to trials. Then built the demo flow so sales could run those calls without an engineer.',
 	},
 	{
 		title: 'Engineering the go-to-market motion',
-		body: 'The other half of that job is building the machine instead of sitting in every call. Shipped the self-serve funnel that turns a Stripe checkout into a live, provisioned agent in seconds — no human in the loop. Built LLM pre-screening wired into customer ATSs, sponsorship pipelines with their own analytics, and course-launch tooling the education team runs without filing a ticket. Same pattern every time: sit in the revenue conversation, find the manual step, automate it, instrument it so you know whether it worked.',
+		body: 'The other half of that job is building the machine instead of sitting in every call. Shipped the self-serve funnel — Stripe checkout to a live, provisioned agent, no human in the loop — plus LLM pre-screening into customer ATSs, sponsorship pipelines, and course-launch tooling. Same pattern every time: find the manual step, automate it, instrument it.',
 	},
 ];
 
@@ -394,41 +394,41 @@ export const experience: Role[] = [
 		org: 'Cyfrin',
 		title: 'Head of Engineering & Lead Developer',
 		period: '2023 → now',
-		body: 'First engineering hire → tech lead → Head of Engineering. All of engineering: architecture and delivery across the whole product platform, while staying hands-on as lead developer.',
+		body: 'First engineering hire → tech lead → Head of Engineering. Architecture and delivery across the whole product platform, still hands-on as lead developer.',
 		href: 'https://www.cyfrin.io',
 	},
 	{
 		org: 'HTML All The Things',
 		title: 'Co-host',
 		period: '2018 → now',
-		body: 'Weekly web development podcast with Matt Lawrence. Nearly 500 episodes on web dev, AI, freelancing, and building a sustainable career in tech.',
+		body: 'Weekly web development podcast with Matt Lawrence. Nearly 500 episodes on web dev, AI, freelancing, and careers in tech.',
 		href: 'https://www.htmlallthethings.com',
 	},
 	{
 		org: 'Molekule',
 		title: 'Senior Frontend Developer',
 		period: '2022 – 2023',
-		body: 'Contract, remote. Brought in to fix the e-commerce frontend and led the frontend team doing it — less UI friction, more sales. That worked, and the bottleneck moved to the backend, so I moved with it and joined that team too. Nuxt and Vue on the front, Magento behind it.',
+		body: 'Contract, remote. Brought in to fix the e-commerce frontend and led the team doing it — less UI friction, more sales. The bottleneck then moved to the backend, so I moved with it. Nuxt and Vue on the front, Magento behind it.',
 		href: 'https://molekule.com',
 	},
 	{
 		org: 'Solarians',
 		title: 'Project Lead Developer',
 		period: '2021 – 2022',
-		body: 'Remote, on-call. Solana NFT project: designed the systems for on-chain interaction and built the TypeScript endpoints for wallet connection across web3 protocols, plus an app that let holders customize animated on-chain NFTs with items. Ran a team of developers and designers on async SCRUM, and fronted the dev updates to the community.',
+		body: 'Remote, on-call. Solana NFT project: designed the on-chain interaction systems, built the TypeScript endpoints for wallet connection, and shipped an app for customizing animated on-chain NFTs. Ran a team of developers and designers, and fronted dev updates to the community.',
 	},
 	{
 		org: 'Contentlinq',
 		title: 'Technical Lead',
 		period: '2018 – 2021',
-		body: 'Contract, full-time. Designed the frontend systems and led a team of four developers and a designer, building applications in VueJS, Cordova, Flutter, JavaScript, and PHP for medium-to-large corporations deploying into secure environments.',
+		body: 'Contract, full-time. Designed the frontend systems and led four developers and a designer, building VueJS, Cordova, Flutter and PHP applications for corporations deploying into secure environments.',
 	},
 	{
 		org: 'Digital Dynasty Design',
 		title: 'Co-founder',
 		// TODO: swap in the real start/end years — LinkedIn has them, I didn't want to guess.
 		period: 'before Cyfrin',
-		body: 'Started a web development agency straight out of college and ran it for the better part of a decade — client work, small business realities, and the responsive-web-design era end to end.',
+		body: 'Started a web development agency out of college and ran it for the better part of a decade — client work, small business realities, the responsive-web era end to end.',
 	},
 	{
 		org: 'McMaster University',
@@ -441,7 +441,7 @@ export const experience: Role[] = [
 export const podcast = {
 	name: 'HTML All The Things',
 	blurb:
-		'A podcast for developers navigating the modern web industry, with my co-host Matt Lawrence. We started it in 2018 partly to find community, and never stopped — web development, the AI-driven shifts in the industry, freelancing, and what it actually takes to build a career in this field.',
+		'A podcast for developers navigating the modern web industry, with my co-host Matt Lawrence. Started in 2018 to find community and never stopped — web development, the AI-driven shifts, freelancing, and what building a career in this field actually takes.',
 	stats: [
 		{ value: '~500', label: 'episodes' },
 		{ value: '1M+', label: 'downloads' },
