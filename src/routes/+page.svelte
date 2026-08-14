@@ -8,16 +8,21 @@
 	import Practice from '$lib/components/Practice.svelte';
 	import Projects from '$lib/components/Projects.svelte';
 	import Section from '$lib/components/Section.svelte';
+	import SideProjects from '$lib/components/SideProjects.svelte';
 	import Stack from '$lib/components/Stack.svelte';
 	import { identity, meta } from '$lib/content';
 </script>
 
 <Head page={meta} />
 
-<a class="skip-link" href="#highlights">Skip to content</a>
+<a class="skip-link" href="#podcast">Skip to content</a>
 
 <main class="shell">
 	<Hero />
+
+	<Section id="podcast" command="./podcast --stats" heading="HTML All The Things">
+		<Podcast />
+	</Section>
 
 	<Section id="highlights" command="cat highlights.md" heading="The short version">
 		<Highlights />
@@ -25,6 +30,10 @@
 
 	<Section id="work" command="ls -l ~/work" heading="What I've built">
 		<Projects />
+	</Section>
+
+	<Section id="side" command="ls ~/side" heading="Nights and weekends">
+		<SideProjects />
 	</Section>
 
 	<Section id="leading" command="cat leading.md" heading="Leading, and the unglamorous parts">
@@ -37,10 +46,6 @@
 
 	<Section id="experience" command="cat experience.log" heading="Where I've been">
 		<Experience />
-	</Section>
-
-	<Section id="podcast" command="./podcast --stats" heading="HTML All The Things">
-		<Podcast />
 	</Section>
 
 	<Section id="contact" command="cat contact.env" heading="Get in touch">

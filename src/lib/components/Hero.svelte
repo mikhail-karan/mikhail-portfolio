@@ -9,15 +9,15 @@
 	<h1 style="--step: 1">{identity.name}</h1>
 
 	<p class="role" style="--step: 2">
-		{identity.role} <span class="faint">at</span>
-		<a href="https://www.cyfrin.io">{identity.company}</a>
-		<span class="faint">·</span> {identity.location}
-	</p>
-
-	<p class="role" style="--step: 3">
 		{identity.sideRole.title} <span class="faint">of</span>
 		<a href={identity.sideRole.href} rel="noreferrer">{identity.sideRole.show}</a>
 		<span class="faint">·</span> {identity.sideRole.note}
+	</p>
+
+	<p class="role" style="--step: 3">
+		{identity.role} <span class="faint">at</span>
+		<a href="https://www.cyfrin.io">{identity.company}</a>
+		<span class="faint">·</span> {identity.location}
 	</p>
 
 	<div class="intro">
@@ -30,11 +30,12 @@
 	</div>
 
 	<nav aria-label="Sections" style="--step: {4 + identity.intro.length}">
+		<a href="#podcast">podcast</a>
 		<a href="#highlights">highlights</a>
 		<a href="#work">work</a>
+		<a href="#side">side</a>
 		<a href="#leading">leading</a>
 		<a href="#stack">stack</a>
-		<a href="#podcast">podcast</a>
 		<a href="#contact">contact</a>
 	</nav>
 </header>

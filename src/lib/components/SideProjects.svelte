@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Shot from '$lib/components/Shot.svelte';
-	import { projects } from '$lib/content';
+	import { sideProjects } from '$lib/content';
 </script>
 
 <ul class="list">
-	{#each projects as project (project.name)}
+	{#each sideProjects as project (project.name)}
 		<li>
 			<div class="head">
 				<h3>
@@ -14,17 +14,11 @@
 						{project.name}
 					{/if}
 				</h3>
-				<span class="period faint">{project.period}</span>
+				<span class="status">[{project.status}]</span>
 			</div>
 
-			<p class="role">{project.role}</p>
 			<p class="summary">{project.summary}</p>
-
-			<ul class="details">
-				{#each project.details as detail (detail)}
-					<li><span class="marker" aria-hidden="true">–</span>{detail}</li>
-				{/each}
-			</ul>
+			<p class="note">{project.note}</p>
 
 			{#if project.shot}
 				<Shot shot={project.shot} />
@@ -43,19 +37,22 @@
 	.list {
 		display: flex;
 		flex-direction: column;
-		gap: 2.25rem;
+		gap: 1rem;
 	}
 
+	/* Boxed rather than the left-ruled list the work section uses — these are a different kind of
+	   thing and shouldn't read as more of the same. */
 	.list > li {
-		padding-left: 1.1rem;
-		border-left: 2px solid var(--border-bright);
+		padding: 1.1rem 1.25rem;
+		border: var(--rule) solid var(--border);
+		background: var(--bg-raised);
 	}
 
 	.head {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: baseline;
-		gap: 0.25rem 0.9rem;
+		gap: 0.25rem 0.75rem;
 	}
 
 	h3 {
@@ -63,7 +60,7 @@
 	}
 
 	h3::before {
-		content: '▸ ';
+		content: '~/';
 		color: var(--accent);
 	}
 
@@ -76,14 +73,9 @@
 		color: var(--accent);
 	}
 
-	.period {
-		font-size: 0.8125em;
-	}
-
-	.role {
+	.status {
 		color: var(--accent-dim);
-		font-size: 0.8125em;
-		text-transform: lowercase;
+		font-size: 0.75em;
 	}
 
 	.summary {
@@ -92,23 +84,13 @@
 		text-wrap: pretty;
 	}
 
-	.details {
-		margin-top: 0.85rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.3rem;
-		font-size: 0.9375em;
-	}
-
-	.details li {
-		display: grid;
-		grid-template-columns: 1.3em 1fr;
+	/* --fg-dim, not --fg-faint: this is a paragraph of body text, and faint doesn't clear 4.5:1
+	   against the raised background in either theme. */
+	.note {
+		margin-top: 0.6rem;
 		color: var(--fg-dim);
+		font-size: 0.9375em;
 		text-wrap: pretty;
-	}
-
-	.marker {
-		color: var(--fg-faint);
 	}
 
 	.tags {
@@ -123,6 +105,6 @@
 		padding: 0.1rem 0.45rem;
 		color: var(--fg-faint);
 		border: var(--rule) solid var(--border);
-		background: var(--bg-raised);
+		background: var(--bg);
 	}
 </style>
