@@ -84,6 +84,20 @@ export const highlights: Highlight[] = [
 	},
 ];
 
+/**
+ * A screenshot of the thing itself, in static/screenshots/.
+ *
+ * `label` titles the window frame — which screen this is, since the project name is already
+ * the heading above it. Dimensions are the file's, so nothing reflows once it loads.
+ */
+export type Shot = {
+	src: string;
+	alt: string;
+	label: string;
+	width: number;
+	height: number;
+};
+
 export type Project = {
 	name: string;
 	period: string;
@@ -92,6 +106,7 @@ export type Project = {
 	details: string[];
 	stack: string[];
 	href?: string;
+	shot?: Shot;
 };
 
 export const projects: Project[] = [
@@ -121,6 +136,13 @@ export const projects: Project[] = [
 			'MCP',
 		],
 		href: 'https://www.cygent.dev/',
+		shot: {
+			src: '/screenshots/cygent.webp',
+			label: 'agent dashboard',
+			alt: 'The Cygent dashboard for a project called bug-bench: counters for audits, active issues and findings by severity, quick actions to start an audit or a pen-test, the agent behaviour panel, and a feed of completed audits and scheduled threat scans.',
+			width: 1600,
+			height: 946,
+		},
 	},
 	{
 		name: 'Cyfrin Updraft',
@@ -146,6 +168,13 @@ export const projects: Project[] = [
 			'Prisma',
 		],
 		href: 'https://updraft.cyfrin.io',
+		shot: {
+			src: '/screenshots/updraft.webp',
+			label: 'lesson player',
+			alt: 'A Blockchain Basics lesson on Cyfrin Updraft: video and written lesson tabs above the player, the lesson description below it, and a course outline in the sidebar with section progress and per-lesson durations.',
+			width: 1600,
+			height: 964,
+		},
 	},
 	{
 		name: 'CodeHawks',
@@ -161,6 +190,13 @@ export const projects: Project[] = [
 		],
 		stack: ['SvelteKit', 'TypeScript', 'tRPC', 'TanStack Query', 'Prisma', 'Postgres', 'Vercel'],
 		href: 'https://codehawks.cyfrin.io',
+		shot: {
+			src: '/screenshots/codehawks.webp',
+			label: 'contest page',
+			alt: 'A CodeHawks contest page for an audit called BattleChain Confidence Pools: scope tags and contest dates on the left, a prize pool breakdown with the per-severity payout split on the right, and the contest timeline running from live through judging and appeals to rewards distribution.',
+			width: 1600,
+			height: 954,
+		},
 	},
 	{
 		name: 'Solodit',
@@ -176,6 +212,13 @@ export const projects: Project[] = [
 		],
 		stack: ['SvelteKit', 'TypeScript', 'tRPC', 'Prisma', 'web scraping', 'ingestion pipelines'],
 		href: 'https://solodit.cyfrin.io',
+		shot: {
+			src: '/screenshots/solodit.webp',
+			label: 'findings search',
+			alt: 'Solodit searching smart contract vulnerabilities: impact, quality, rarity and source filters down the left, a results list of over fifty thousand findings in the middle, and the selected finding’s severity, description and affected code on the right.',
+			width: 1600,
+			height: 966,
+		},
 	},
 	{
 		name: 'Unified identity',
@@ -189,6 +232,13 @@ export const projects: Project[] = [
 			'Hired and managed the engineer who owned it',
 		],
 		stack: ['SvelteKit', 'tRPC', 'Prisma', 'auth/session architecture'],
+		shot: {
+			src: '/screenshots/profiles.webp',
+			label: 'shared profile',
+			alt: 'A Cyfrin profile page: one account showing CodeHawks earnings, ranking and finding counts next to Updraft course progress, with cross-links into both products from the sidebar.',
+			width: 1600,
+			height: 960,
+		},
 	},
 	{
 		name: 'Jobs board',
@@ -201,6 +251,73 @@ export const projects: Project[] = [
 			'LLM candidate pre-screening ahead of ATS handoff, with integrations syncing companies’ own listings into the board',
 		],
 		stack: ['SvelteKit', 'Stripe', 'LLM screening', 'ATS integrations'],
+	},
+];
+
+export type SideProject = {
+	name: string;
+	/** What state it is actually in — playable, in use, prototype. Not what it aspires to be. */
+	status: string;
+	summary: string;
+	/** The part that was interesting to build. */
+	note: string;
+	stack: string[];
+	href?: string;
+	/** Shown whole, unlike the work screenshots — a game board and a phone-width app lose their
+	 *  point when you crop them to a corner. */
+	shot?: Shot;
+};
+
+/** Things built outside work hours, currently being worked on. */
+export const sideProjects: SideProject[] = [
+	{
+		name: 'Elevator Operator',
+		status: 'playable',
+		summary:
+			'A browser game where you are the elevator. Passengers spawn on floors with a destination and a patience meter, and you decide where the car goes — batch the pickups well or eat a strike when someone gives up waiting.',
+		note: 'The simulation is a pure, deterministic, tick-based module with no DOM or canvas imports: tick(state, commands, dt) returns the next state plus the events that happened. That keeps the game logic unit-tested and the renderer swappable. Canvas 2D, seeded RNG, zero runtime dependencies.',
+		stack: ['TypeScript', 'Vite', 'Canvas 2D', 'Vitest', 'no runtime deps'],
+		href: 'https://elevator-operator.mikek.me',
+		shot: {
+			src: '/screenshots/elevator-operator.webp',
+			label: 'a shift in progress',
+			alt: 'Elevator Operator mid-game: a cutaway of an eight-floor building with passengers waiting on floors 1, 4 and 8, the car stopped at floor 6 with its doors open and three riders inside, a brass call panel beside the shaft, and a side panel showing a score of 159, one strike, and forty seconds elapsed.',
+			width: 1600,
+			height: 950,
+		},
+	},
+	{
+		name: 'Language Learner',
+		status: 'invite-only, in use',
+		summary:
+			'A voice tutor built for one person — a Russian speaker learning elementary English talks to an AI tutor out loud, and gets a written review of the conversation afterwards.',
+		note: 'OpenAI Realtime over WebRTC, with the audio going straight from the browser to OpenAI and the server only doing signalling. Sessions persist transcripts, a learner profile, and corrections that feed the next warm-up. Installable as a PWA whose service worker caches the shell and never the transcripts. Tests apply the real migrations to an in-process PGlite database, so what they run against and what deploys to Neon cannot drift.',
+		stack: [
+			'SvelteKit',
+			'TypeScript',
+			'OpenAI Realtime',
+			'WebRTC',
+			'Drizzle',
+			'Neon',
+			'Better Auth',
+			'PWA',
+		],
+		href: 'https://language-learner.mikek.me',
+		shot: {
+			src: '/screenshots/language-learner.webp',
+			label: 'a session in progress',
+			alt: 'A live session in Language Learner: a running transcript alternating between the tutor and the learner in English, pause and end buttons under it, a note that saying “pause please” out loud works too, and a privacy notice in Russian explaining that the administrator can see the conversations.',
+			width: 1600,
+			height: 926,
+		},
+	},
+	{
+		name: 'Drain',
+		status: 'prototype',
+		summary:
+			'A macOS menu bar app that tells you why the battery is draining. It exists because I lost 20% in an hour to a runaway node process and two editor extension hosts, and nothing surfaced it — Activity Monitor only helps once you already suspect something.',
+		note: 'Samples power draw through IOPowerSources, per-process CPU and memory through proc_pidinfo, and compressor pressure through host_statistics64. When the thresholds hold for a minute it fires one notification with Kill, Snooze and Ignore this app on it. The rest of the time it says nothing, which is the actual feature.',
+		stack: ['Swift', 'SwiftUI', 'IOKit', 'macOS'],
 	},
 ];
 
