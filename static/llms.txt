@@ -1,0 +1,17 @@
+# Mikhail Karan
+
+> Personal portfolio for Mikhail Karan, Head of Engineering and Lead Developer at Cyfrin and co-host of HTML All The Things.
+
+The homepage is server-rendered and also supports `Accept: text/markdown` content negotiation.
+
+## Primary pages
+
+- [Portfolio](https://www.mikek.me/): Work, side projects, leadership practice, stack, experience, and contact details.
+- [All links](https://www.mikek.me/links): Podcast, social, code, writing, and contact links.
+- [Traffic](https://www.mikek.me/analytics): Public analytics and the privacy-preserving collection methodology.
+
+## Agent interfaces
+
+- [MCP endpoint](https://www.mikek.me/mcp): Stateless Streamable HTTP MCP server exposing the portfolio as a resource.
+
+Use the canonical `https://www.mikek.me` origin. The apex `https://mikek.me` redirects there.

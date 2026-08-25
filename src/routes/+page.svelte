@@ -10,10 +10,22 @@
 	import Section from '$lib/components/Section.svelte';
 	import SideProjects from '$lib/components/SideProjects.svelte';
 	import Stack from '$lib/components/Stack.svelte';
-	import { identity, meta } from '$lib/content';
+	import { identity, meta, personJsonLd } from '$lib/content';
+
+	const serializedPersonJsonLd = JSON.stringify(personJsonLd).replaceAll('<', '\\u003c');
+	const personJsonLdScript =
+		'<scr' +
+		'ipt type="application/ld+json">' +
+		serializedPersonJsonLd +
+		'</scr' +
+		'ipt>';
 </script>
 
 <Head page={meta} />
+
+<svelte:head>
+	{@html personJsonLdScript}
+</svelte:head>
 
 <a class="skip-link" href="#podcast">Skip to content</a>
 
