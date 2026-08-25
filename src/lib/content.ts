@@ -5,7 +5,7 @@
  * dashboard numbers. See the career-achievements repo for the sourced versions.
  */
 
-import type { IconName } from '$lib/icons';
+import type { IconName } from './icons';
 
 export const identity = {
 	name: 'Mikhail Karan',
@@ -676,3 +676,26 @@ export const contact = [
 	{ label: 'dev.to', value: 'mikehtmlallthethings', href: 'https://dev.to/mikehtmlallthethings' },
 	{ label: 'x', value: '@htmleverything', href: 'https://x.com/htmleverything' },
 ] as const;
+
+/** Machine-readable identity for the homepage. Keep this derived from the same public copy. */
+export const personJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	'@id': `${site.url}/#person`,
+	name: identity.name,
+	url: `${site.url}/`,
+	description: meta.description,
+	jobTitle: identity.role,
+	worksFor: {
+		'@type': 'Organization',
+		name: identity.company,
+		url: 'https://www.cyfrin.io',
+	},
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: 'Milton',
+		addressRegion: 'Ontario',
+		addressCountry: 'CA',
+	},
+	sameAs: contact.filter((entry) => entry.label !== 'email').map((entry) => entry.href),
+} as const;

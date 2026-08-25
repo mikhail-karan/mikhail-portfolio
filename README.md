@@ -1,9 +1,9 @@
 # mikhail-portfolio
 
-Personal portfolio — a terminal-styled site built with SvelteKit. The content pages
-are prerendered to static files: the portfolio at `/` and a link-in-bio page at
-`/links`. `/analytics` is server-rendered and publishes the site's own traffic, which
-the site also collects itself — see [Analytics](#analytics).
+Personal portfolio — a terminal-styled site built with SvelteKit. The portfolio at `/`
+is server-rendered so it can negotiate HTML or Markdown at the same URL; the link-in-bio
+page at `/links` is prerendered. `/analytics` is server-rendered and publishes the site's
+own traffic, which the site also collects itself — see [Analytics](#analytics).
 
 ## Running it
 
@@ -57,21 +57,36 @@ src/
 │   ├── components/             ← Hero, Section, Prompt, Head, Icon + one per section
 │   ├── server/                 ← collector, salt, queries, retention (never bundled)
 │   └── styles/app.css          ← design tokens and base layer
-├── hooks.server.ts             ← dev-only stand-in for middleware.ts
+├── hooks.server.ts             ← negotiation, auth backstop, dev collection
 └── routes/
     ├── +layout.svelte          ← favicon, theme colour, og:type, twitter:card
-    ├── +layout.ts              ← prerender = true
+    ├── +layout.ts              ← SSR on; prerender by default
+    ├── +page.ts                ← keeps / dynamic for content negotiation
     ├── +page.svelte            ← composes the sections
     ├── links/+page.svelte      ← /links, the link-in-bio page
     ├── analytics/              ← /analytics (ISR) and /analytics/private (no-store)
+    ├── mcp/                    ← stateless, read-only MCP resource server
     └── api/cron/sweep/         ← daily retention job
 middleware.ts                   ← edge: collection + private-tier Basic Auth
+static/llms.txt                 ← compact agent navigation index
 drizzle/                        ← generated migrations
 ```
 
 Each page renders `Head.svelte` with its own `PageMeta` — title, description,
 canonical, `og:url`, and its own card. The layout only carries what's identical
 everywhere.
+
+## Agent interfaces
+
+- `/` returns the normal server-rendered HTML by default and Markdown when the client
+  prefers `Accept: text/markdown`. Both variants send `Vary: Accept, Accept-Encoding`;
+  unsupported media types receive `406 Not Acceptable`.
+- `/llms.txt` is the compact navigation index for agents.
+- `/mcp` is a stateless Streamable HTTP MCP endpoint. It supports the current
+  per-request metadata protocol and the legacy initialize flow, and exposes the public
+  portfolio Markdown through `resources/list` and `resources/read`.
+- Unknown routes keep a real `404`; Markdown clients receive recovery links while
+  browsers receive a terminal-styled error page with the same destinations.
 
 ## Design notes
 
@@ -119,8 +134,8 @@ Point that at a scratch Neon branch — the suite truncates the tables it uses.
 
 ## Deploying to Vercel
 
-`@sveltejs/adapter-vercel` writes `.vercel/output`, keeping `/` and `/links` as static
-files and adding functions for `/analytics`, `/analytics/private` and the cron route.
+`@sveltejs/adapter-vercel` writes `.vercel/output`, keeping `/links` as a static file and
+adding functions for `/`, `/mcp`, `/analytics`, `/analytics/private` and the cron route.
 `vercel.json` **is** required now: it declares the daily cron. Vercel builds root
 `middleware.ts` itself.
 
