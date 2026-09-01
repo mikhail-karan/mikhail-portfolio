@@ -10,8 +10,9 @@
  * In production the middleware has already recorded the request and doing it again here would
  * double-count every pageview.
  *
- * Agent-facing content negotiation runs here in every environment. The homepage stays dynamic so
- * the same URL can return server-rendered HTML or Markdown, and 404s can return recovery Markdown.
+ * In development this hook also negotiates the homepage representation because Vite does not run
+ * routing middleware. Production middleware handles `/` before serving its prerendered HTML file.
+ * Dynamic 404s continue to negotiate here in every environment.
  */
 
 import { dev } from '$app/environment';
@@ -27,10 +28,8 @@ import {
 	notFoundMarkdown,
 	withVary,
 } from '$lib/server/agent-content';
-import { COLLECTED_PATHS, recordEvent } from '$lib/server/collect';
-import { db } from '$lib/server/db/client';
-import { saltCache } from '$lib/server/salt';
-import { createStore } from '$lib/server/store';
+import { COLLECTED_PATHS } from '$lib/server/collected-paths';
+import { recordPageview } from '$lib/server/record-pageview';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	if (isPrivateTier(event.url.pathname)) {
@@ -43,14 +42,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (dev && COLLECTED_PATHS.has(event.url.pathname)) {
 		// Awaited rather than deferred: there is no `waitUntil` here, and a dev server has no
 		// latency budget worth protecting.
-		await recordEvent({
-			headers: event.request.headers,
-			url: event.url,
-			now: new Date(),
-			store: createStore(db),
-			salts: saltCache,
-			log: (message, error) => console.error(message, error),
-		});
+		await recordPageview(event.request.headers, event.url);
 	}
 
 	const canNegotiate = event.request.method === 'GET' || event.request.method === 'HEAD';

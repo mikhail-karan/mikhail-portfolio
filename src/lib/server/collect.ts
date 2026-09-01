@@ -19,7 +19,7 @@ import type { EventInsert } from './db/schema';
  * the middleware from being invoked for assets — and this is the decision. Drift makes the
  * middleware run more often than it needs to; it never makes it record the wrong thing.
  */
-export const COLLECTED_PATHS: ReadonlySet<string> = new Set(['/', '/links', '/analytics']);
+export { COLLECTED_PATHS } from './collected-paths';
 
 export type CollectDeps = {
 	headers: Headers;

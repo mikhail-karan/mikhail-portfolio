@@ -1,21 +1,26 @@
 /**
- * Edge middleware: collection (§8) and the private-tier gate (§10).
+ * Routing middleware: homepage representation negotiation, collection (§8), and
+ * the private-tier gate (§10).
  *
  * Vercel bundles this file itself, outside the SvelteKit build, so the imports below are
  * relative paths rather than `$lib` — the alias does not exist here. The logic they reach is
  * the same code `src/hooks.server.ts` runs in `vite dev`, where no middleware executes.
  *
- * This never rewrites. Vercel middleware on SvelteKit does not support URL rewrites; the 401
- * is a short-circuit response, which is a different thing and is supported.
+ * This never rewrites. The negotiated Markdown and 401 responses short-circuit routing;
+ * normal HTML requests continue to the prerendered file.
  */
 
 import { next, waitUntil } from '@vercel/functions';
 
 import { isAuthorized, isPrivateTier, unauthorized } from './src/lib/server/auth';
-import { COLLECTED_PATHS, recordEvent } from './src/lib/server/collect';
-import { db } from './src/lib/server/db/client';
-import { saltCache } from './src/lib/server/salt';
-import { createStore } from './src/lib/server/store';
+import {
+	NEGOTIATED_VARY,
+	homeMarkdown,
+	markdownResponse,
+	negotiateRepresentation,
+	notAcceptableResponse,
+} from './src/lib/server/agent-content';
+import { COLLECTED_PATHS } from './src/lib/server/collected-paths';
 
 /**
  * Middleware bills per invocation, so this deliberately excludes `/_app/*` and every static
@@ -42,18 +47,28 @@ export default async function middleware(request: Request) {
 	}
 
 	if (COLLECTED_PATHS.has(url.pathname)) {
-		// Deferred, so the write is never on the path of the visitor's response (§8).
-		waitUntil(
-			recordEvent({
-				headers: request.headers,
-				url,
-				now: new Date(),
-				store: createStore(db),
-				salts: saltCache,
-				log: (message, error) => console.error(message, error),
-			}),
-		);
+		// The dynamic import is part of the deferred task: even loading Neon, Drizzle, and
+		// the collector stays off the visitor's response path.
+		waitUntil(recordPageviewInBackground(request.headers, url));
 	}
 
-	return next();
+	const canNegotiate = request.method === 'GET' || request.method === 'HEAD';
+	if (url.pathname === '/' && canNegotiate) {
+		const representation = negotiateRepresentation(request.headers.get('Accept'));
+
+		if (representation === 'markdown') {
+			return markdownResponse(homeMarkdown, 200, request.method);
+		}
+
+		if (representation === 'not-acceptable') {
+			return notAcceptableResponse(request.method);
+		}
+	}
+
+	return next(url.pathname === '/' ? { headers: { Vary: NEGOTIATED_VARY } } : undefined);
+}
+
+async function recordPageviewInBackground(headers: Headers, url: URL) {
+	const { recordPageview } = await import('./src/lib/server/record-pageview');
+	return recordPageview(headers, url);
 }
