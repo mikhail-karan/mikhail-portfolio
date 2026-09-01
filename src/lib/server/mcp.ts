@@ -19,7 +19,7 @@ const SERVER_INFO = {
 	title: 'Mikhail Karan Portfolio',
 	version: '1.0.0',
 	description: 'Public, read-only portfolio resources for Mikhail Karan.',
-	websiteUrl: 'https://www.mikek.me/',
+	websiteUrl: 'https://mikek.me/',
 } as const;
 
 const RESOURCE = {
@@ -194,7 +194,7 @@ function allowedOrigin(request: Request): boolean {
 	if (!origin) return true;
 
 	const requestUrl = new URL(request.url);
-	const allowed = new Set(['https://www.mikek.me', 'https://mikek.me']);
+	const allowed = new Set(['https://mikek.me', 'https://www.mikek.me']);
 	if (requestUrl.hostname === 'localhost' || requestUrl.hostname === '127.0.0.1') {
 		allowed.add(requestUrl.origin);
 	}

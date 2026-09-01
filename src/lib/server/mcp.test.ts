@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { HOME_RESOURCE_URI, homeMarkdown } from './agent-content';
 import { MODERN_PROTOCOL_VERSION, handleMcpPost, mcpMethodNotAllowed } from './mcp';
 
-const endpoint = 'https://www.mikek.me/mcp';
+const endpoint = 'https://mikek.me/mcp';
 const legacyHeaders = {
 	Accept: 'application/json, text/event-stream',
 	'Content-Type': 'application/json',

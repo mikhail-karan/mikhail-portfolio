@@ -153,6 +153,6 @@ Run `pnpm db:migrate` against the production database once before the first depl
 ## Before going live
 
 - Fill in the real Digital Dynasty Design years in `src/lib/content.ts` (marked TODO).
-- `site.url` in `src/lib/content.ts` is `https://www.mikek.me` — the apex redirects
+- `site.url` in `src/lib/content.ts` is `https://mikek.me` — the `www` host redirects
   there, and canonical/`og:url`/`og:image` are all built from it. Change it there if
   the domain ever moves.

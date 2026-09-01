@@ -29,7 +29,7 @@ describe('routing middleware', () => {
 
 	it('continues HTML homepage requests to the prerendered file with negotiated caching', async () => {
 		const response = await middleware(
-			new Request('https://www.mikek.me/', { headers: { Accept: 'text/html' } }),
+			new Request('https://mikek.me/', { headers: { Accept: 'text/html' } }),
 		);
 
 		expect(response.headers.get('x-middleware-next')).toBe('1');
@@ -39,7 +39,7 @@ describe('routing middleware', () => {
 
 	it('serves the Markdown representation before static-file routing', async () => {
 		const response = await middleware(
-			new Request('https://www.mikek.me/', { headers: { Accept: 'text/markdown' } }),
+			new Request('https://mikek.me/', { headers: { Accept: 'text/markdown' } }),
 		);
 
 		expect(response.status).toBe(200);
@@ -52,7 +52,7 @@ describe('routing middleware', () => {
 
 	it('rejects unsupported homepage representations', async () => {
 		const response = await middleware(
-			new Request('https://www.mikek.me/', { headers: { Accept: 'application/json' } }),
+			new Request('https://mikek.me/', { headers: { Accept: 'application/json' } }),
 		);
 
 		expect(response.status).toBe(406);
@@ -61,7 +61,7 @@ describe('routing middleware', () => {
 	});
 
 	it('enforces private analytics auth before scheduling background work', async () => {
-		const response = await middleware(new Request('https://www.mikek.me/analytics/private'));
+		const response = await middleware(new Request('https://mikek.me/analytics/private'));
 
 		expect(response.status).toBe(401);
 		expect(vercel.waitUntil).not.toHaveBeenCalled();

@@ -27,9 +27,9 @@ export const identity = {
 	],
 } as const;
 
-/** Canonical origin. The apex redirects here, so links and og:url use the www host. */
+/** Canonical origin. The www host redirects here, so links and og:url use the apex. */
 export const site = {
-	url: 'https://www.mikek.me',
+	url: 'https://mikek.me',
 } as const;
 
 export type PageMeta = {
