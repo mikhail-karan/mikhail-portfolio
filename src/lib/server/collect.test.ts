@@ -16,7 +16,7 @@ const DESKTOP_UA =
 const CRAWLER_UA =
 	'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; GPTBot/1.2; +https://openai.com/gptbot';
 
-const SITE = 'https://www.mikek.me';
+const SITE = 'https://mikek.me';
 
 type Recorder = CollectStore & { events: EventInsert[]; claimedDays: string[] };
 
@@ -180,11 +180,11 @@ describe('recordEvent', () => {
 
 describe('classifyReferrer', () => {
 	it('treats a missing referrer as none', () => {
-		expect(classifyReferrer(null, 'www.mikek.me')).toEqual({ kind: 'none', url: null });
+		expect(classifyReferrer(null, 'mikek.me')).toEqual({ kind: 'none', url: null });
 	});
 
 	it('treats a same-host referrer as internal', () => {
-		expect(classifyReferrer('https://www.mikek.me/links', 'www.mikek.me')).toEqual({
+		expect(classifyReferrer('https://mikek.me/links', 'mikek.me')).toEqual({
 			kind: 'internal',
 			url: null,
 		});
@@ -195,12 +195,10 @@ describe('classifyReferrer', () => {
 	});
 
 	it('does not treat a lookalike host as internal', () => {
-		expect(classifyReferrer('https://www.mikek.me.evil.test/', 'www.mikek.me').kind).toBe(
-			'external',
-		);
+		expect(classifyReferrer('https://mikek.me.evil.test/', 'mikek.me').kind).toBe('external');
 	});
 
 	it('treats an unparseable referrer as none', () => {
-		expect(classifyReferrer('not a url', 'www.mikek.me')).toEqual({ kind: 'none', url: null });
+		expect(classifyReferrer('not a url', 'mikek.me')).toEqual({ kind: 'none', url: null });
 	});
 });

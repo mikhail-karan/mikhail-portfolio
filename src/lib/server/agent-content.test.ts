@@ -19,8 +19,8 @@ describe('agent-facing content', () => {
 
 	it('provides recovery links in a Markdown 404 body', () => {
 		expect(notFoundMarkdown).toMatch(/^# 404/);
-		expect(notFoundMarkdown).toContain('https://www.mikek.me/llms.txt');
-		expect(notFoundMarkdown).toContain('https://www.mikek.me/mcp');
+		expect(notFoundMarkdown).toContain('https://mikek.me/llms.txt');
+		expect(notFoundMarkdown).toContain('https://mikek.me/mcp');
 	});
 
 	it.each([
@@ -58,7 +58,7 @@ describe('agent-facing content', () => {
 			'@context': 'https://schema.org',
 			'@type': 'Person',
 			name: 'Mikhail Karan',
-			url: 'https://www.mikek.me/',
+			url: 'https://mikek.me/',
 			jobTitle: 'Head of Engineering & Lead Developer',
 		});
 		expect(personJsonLd.sameAs).toContain('https://github.com/mikhail-karan');
