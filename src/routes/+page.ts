@@ -1,2 +1,2 @@
-/** Keep the homepage server-rendered so HTML and Markdown can share one negotiated URL. */
-export const prerender = false;
+/** Browser HTML is immutable portfolio content and belongs on Vercel's static edge. */
+export const prerender = true;

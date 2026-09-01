@@ -1,8 +1,8 @@
 # mikhail-portfolio
 
 Personal portfolio — a terminal-styled site built with SvelteKit. The portfolio at `/`
-is server-rendered so it can negotiate HTML or Markdown at the same URL; the link-in-bio
-page at `/links` is prerendered. `/analytics` is server-rendered and publishes the site's
+and link-in-bio page at `/links` are prerendered. Routing middleware serves Markdown from
+the same homepage URL when requested. `/analytics` is server-rendered and publishes the site's
 own traffic, which the site also collects itself — see [Analytics](#analytics).
 
 ## Running it
@@ -61,13 +61,13 @@ src/
 └── routes/
     ├── +layout.svelte          ← favicon, theme colour, og:type, twitter:card
     ├── +layout.ts              ← SSR on; prerender by default
-    ├── +page.ts                ← keeps / dynamic for content negotiation
+    ├── +page.ts                ← keeps / explicitly prerendered
     ├── +page.svelte            ← composes the sections
     ├── links/+page.svelte      ← /links, the link-in-bio page
     ├── analytics/              ← /analytics (ISR) and /analytics/private (no-store)
     ├── mcp/                    ← stateless, read-only MCP resource server
     └── api/cron/sweep/         ← daily retention job
-middleware.ts                   ← edge: collection + private-tier Basic Auth
+middleware.ts                   ← routing: negotiation, collection + private-tier Basic Auth
 static/llms.txt                 ← compact agent navigation index
 drizzle/                        ← generated migrations
 ```
@@ -78,7 +78,7 @@ everywhere.
 
 ## Agent interfaces
 
-- `/` returns the normal server-rendered HTML by default and Markdown when the client
+- `/` returns prerendered HTML by default and Markdown when the client
   prefers `Accept: text/markdown`. Both variants send `Vary: Accept, Accept-Encoding`;
   unsupported media types receive `406 Not Acceptable`.
 - `/llms.txt` is the compact navigation index for agents.
@@ -104,8 +104,9 @@ The site counts its own traffic instead of using a third-party provider. The ful
 design, including the alternatives that were rejected, is in
 [`docs/analytics-spec.md`](docs/analytics-spec.md). In short:
 
-- Edge middleware writes one row per pageview to Neon Postgres through drizzle's
-  HTTP driver, deferred with `waitUntil` so it never delays a response.
+- Routing middleware schedules one row per pageview to Neon Postgres through drizzle's
+  HTTP driver. Both the analytics module import and write are deferred with `waitUntil`,
+  so neither is on the response path.
 - A visitor is `sha256(daily salt || host || ip || user agent)`. The raw IP is never
   stored, and the salt is destroyed when the day rolls over, so yesterday's
   identifiers cannot be recomputed. Nothing is written to the visitor's device, so
@@ -134,18 +135,18 @@ Point that at a scratch Neon branch — the suite truncates the tables it uses.
 
 ## Deploying to Vercel
 
-`@sveltejs/adapter-vercel` writes `.vercel/output`, keeping `/links` as a static file and
-adding functions for `/`, `/mcp`, `/analytics`, `/analytics/private` and the cron route.
+`@sveltejs/adapter-vercel` writes `.vercel/output`, keeping `/` and `/links` as static files and
+adding functions for `/mcp`, `/analytics`, `/analytics/private` and the cron route.
 `vercel.json` **is** required now: it declares the daily cron. Vercel builds root
 `middleware.ts` itself.
 
 Set these in the project's environment variables:
 
-| variable | what it does |
-|---|---|
-| `DATABASE_URL` | Neon connection string |
-| `ANALYTICS_PRIVATE_AUTH` | `user:password` for `/analytics/private` |
-| `CRON_SECRET` | Vercel sends it as a bearer token to `/api/cron/sweep` |
+| variable                 | what it does                                           |
+| ------------------------ | ------------------------------------------------------ |
+| `DATABASE_URL`           | Neon connection string                                 |
+| `ANALYTICS_PRIVATE_AUTH` | `user:password` for `/analytics/private`               |
+| `CRON_SECRET`            | Vercel sends it as a bearer token to `/api/cron/sweep` |
 
 Run `pnpm db:migrate` against the production database once before the first deploy.
 
