@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
 
-import { handleMcpPost, mcpMethodNotAllowed } from '$lib/server/mcp';
+import { handleMcpPost, mcpMethodNotAllowed } from '#lib/server/mcp.js';
 
 export const prerender = false;
 

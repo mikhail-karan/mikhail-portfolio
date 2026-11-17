@@ -3,7 +3,7 @@
  *
  * Imported by `middleware.ts` through `collect.ts`, so this file and everything under
  * `src/lib/server/` that the collector touches use same-directory relative imports rather
- * than `$lib` — Vercel bundles the middleware itself and does not resolve SvelteKit aliases.
+ * than `#lib` — Vercel bundles the middleware itself, outside the SvelteKit build.
  */
 
 import { customType } from 'drizzle-orm/pg-core';

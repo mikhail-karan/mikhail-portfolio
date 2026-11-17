@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { practice } from '$lib/content';
+	import { practice } from '#lib/content.js';
 </script>
 
 <ul class="list">

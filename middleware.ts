@@ -3,7 +3,7 @@
  * the private-tier gate (§10).
  *
  * Vercel bundles this file itself, outside the SvelteKit build, so the imports below are
- * relative paths rather than `$lib` — the alias does not exist here. The logic they reach is
+ * plain relative paths rather than `#lib`. The logic they reach is
  * the same code `src/hooks.server.ts` runs in `vite dev`, where no middleware executes.
  *
  * This never rewrites. The negotiated Markdown and 401 responses short-circuit routing;

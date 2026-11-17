@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Head from '$lib/components/Head.svelte';
-	import Icon from '$lib/components/Icon.svelte';
-	import Prompt from '$lib/components/Prompt.svelte';
-	import { identity, links } from '$lib/content';
+	import Head from '#lib/components/Head.svelte';
+	import Icon from '#lib/components/Icon.svelte';
+	import Prompt from '#lib/components/Prompt.svelte';
+	import { identity, links } from '#lib/content.js';
 
 	/** Flat row counter, so the entrance cascade carries on across group boundaries. */
 	let step = 0;

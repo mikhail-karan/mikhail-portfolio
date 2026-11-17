@@ -15,11 +15,11 @@
  * Dynamic 404s continue to negotiate here in every environment.
  */
 
-import { dev } from '$app/environment';
-import { env } from '$env/dynamic/private';
-import type { Handle } from '@sveltejs/kit';
+import { dev } from '$app/env';
+import * as env from '$app/env/private';
+import type { Handle } from '@sveltejs/kit/hooks';
 
-import { isAuthorized, isPrivateTier, unauthorized } from '$lib/server/auth';
+import { isAuthorized, isPrivateTier, unauthorized } from '#lib/server/auth.js';
 import {
 	homeMarkdown,
 	markdownResponse,
@@ -27,9 +27,9 @@ import {
 	notAcceptableResponse,
 	notFoundMarkdown,
 	withVary,
-} from '$lib/server/agent-content';
-import { COLLECTED_PATHS } from '$lib/server/collected-paths';
-import { recordPageview } from '$lib/server/record-pageview';
+} from '#lib/server/agent-content.js';
+import { COLLECTED_PATHS } from '#lib/server/collected-paths.js';
+import { recordPageview } from '#lib/server/record-pageview.js';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	if (isPrivateTier(event.url.pathname)) {

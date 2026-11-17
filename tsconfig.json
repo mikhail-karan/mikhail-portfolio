@@ -1,5 +1,5 @@
 {
-	"extends": "./.svelte-kit/tsconfig.json",
+	"extends": "$app/tsconfig",
 	"compilerOptions": {
 		"rewriteRelativeImportExtensions": true,
 		"allowJs": true,
@@ -12,24 +12,7 @@
 		"strict": true,
 		"moduleResolution": "bundler"
 	},
-	// Restated from .svelte-kit/tsconfig.json (paths there are relative to .svelte-kit/) so that
-	// middleware.ts and drizzle.config.ts, which live outside src/, are type-checked too.
-	"include": [
-		".svelte-kit/ambient.d.ts",
-		".svelte-kit/env.d.ts",
-		".svelte-kit/non-ambient.d.ts",
-		".svelte-kit/types/**/$types.d.ts",
-		"vite.config.ts",
-		"drizzle.config.ts",
-		"middleware.ts",
-		"src/**/*.js",
-		"src/**/*.ts",
-		"src/**/*.svelte"
-	],
-	"exclude": ["node_modules/**"]
-	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
-	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
-	//
-	// To make changes to top-level options such as include and exclude, we recommend extending
-	// the generated config; see https://svelte.dev/docs/kit/configuration#typescript
+	// "*" covers middleware.ts, drizzle.config.ts, and vite.config.ts, which live outside src/.
+	"include": ["src", "*"],
+	"exclude": ["src/service-worker"]
 }

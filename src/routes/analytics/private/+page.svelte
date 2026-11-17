@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Prompt from '$lib/components/Prompt.svelte';
+	import Prompt from '#lib/components/Prompt.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();

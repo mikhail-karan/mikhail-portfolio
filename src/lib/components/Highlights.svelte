@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { highlights } from '$lib/content';
+	import { highlights } from '#lib/content.js';
 </script>
 
 <ul class="grid">

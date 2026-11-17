@@ -1,9 +1,9 @@
-import { env } from '$env/dynamic/private';
+import * as env from '$app/env/private';
 import { error, json } from '@sveltejs/kit';
 
-import { constantTimeEqual } from '$lib/server/auth';
-import { db } from '$lib/server/db/client';
-import { sweep } from '$lib/server/retention';
+import { constantTimeEqual } from '#lib/server/auth.js';
+import { db } from '#lib/server/db/client.js';
+import { sweep } from '#lib/server/retention.js';
 import type { RequestHandler } from './$types';
 
 export const prerender = false;

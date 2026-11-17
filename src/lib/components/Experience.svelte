@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { experience } from '$lib/content';
+	import { experience } from '#lib/content.js';
 </script>
 
 <ol>

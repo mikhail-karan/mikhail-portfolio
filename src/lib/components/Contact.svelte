@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { contact } from '$lib/content';
+	import { contact } from '#lib/content.js';
 </script>
 
 <ul>
