@@ -1,16 +1,16 @@
 <script lang="ts">
-	import Contact from '$lib/components/Contact.svelte';
-	import Experience from '$lib/components/Experience.svelte';
-	import Head from '$lib/components/Head.svelte';
-	import Hero from '$lib/components/Hero.svelte';
-	import Highlights from '$lib/components/Highlights.svelte';
-	import Podcast from '$lib/components/Podcast.svelte';
-	import Practice from '$lib/components/Practice.svelte';
-	import Projects from '$lib/components/Projects.svelte';
-	import Section from '$lib/components/Section.svelte';
-	import SideProjects from '$lib/components/SideProjects.svelte';
-	import Stack from '$lib/components/Stack.svelte';
-	import { identity, meta, personJsonLd } from '$lib/content';
+	import Contact from '#lib/components/Contact.svelte';
+	import Experience from '#lib/components/Experience.svelte';
+	import Head from '#lib/components/Head.svelte';
+	import Hero from '#lib/components/Hero.svelte';
+	import Highlights from '#lib/components/Highlights.svelte';
+	import Podcast from '#lib/components/Podcast.svelte';
+	import Practice from '#lib/components/Practice.svelte';
+	import Projects from '#lib/components/Projects.svelte';
+	import Section from '#lib/components/Section.svelte';
+	import SideProjects from '#lib/components/SideProjects.svelte';
+	import Stack from '#lib/components/Stack.svelte';
+	import { identity, meta, personJsonLd } from '#lib/content.js';
 
 	const serializedPersonJsonLd = JSON.stringify(personJsonLd).replaceAll('<', '\\u003c');
 	const personJsonLdScript =

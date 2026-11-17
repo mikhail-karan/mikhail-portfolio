@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { podcast } from '$lib/content';
+	import { podcast } from '#lib/content.js';
 </script>
 
 <div class="wrap">

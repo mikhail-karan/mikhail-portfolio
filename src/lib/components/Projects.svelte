@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Shot from '$lib/components/Shot.svelte';
-	import { projects } from '$lib/content';
+	import Shot from '#lib/components/Shot.svelte';
+	import { projects } from '#lib/content.js';
 </script>
 
 <ul class="list">

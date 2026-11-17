@@ -63,6 +63,16 @@ describe('isPrivateTier', () => {
 		expect(isPrivateTier('/')).toBe(false);
 	});
 
+	it('covers percent-encoded spellings that SvelteKit decodes to the private route', () => {
+		expect(isPrivateTier('/analytics/%70rivate')).toBe(true);
+		expect(isPrivateTier('/analytics/%70rivate/__data.json')).toBe(true);
+		expect(isPrivateTier('/%61nalytics/private')).toBe(true);
+	});
+
+	it('fails closed on a malformed escape', () => {
+		expect(isPrivateTier('/analytics/%E0%A4%A')).toBe(true);
+	});
+
 	it('does not gate a lookalike sibling route', () => {
 		expect(isPrivateTier('/analytics/private-notes')).toBe(false);
 	});

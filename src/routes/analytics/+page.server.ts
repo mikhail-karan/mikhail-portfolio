@@ -1,6 +1,6 @@
-import { utcStamp } from '$lib/format';
-import { db } from '$lib/server/db/client';
-import { publicStats } from '$lib/server/queries';
+import { utcStamp } from '#lib/format.js';
+import { db } from '#lib/server/db/client.js';
+import { publicStats } from '#lib/server/queries.js';
 import type { PageServerLoad } from './$types';
 
 export const prerender = false;

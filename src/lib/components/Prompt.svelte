@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { identity } from '$lib/content';
+	import { identity } from '#lib/content.js';
 
 	type Props = {
 		command: string;

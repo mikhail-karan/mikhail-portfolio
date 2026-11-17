@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { site, type PageMeta } from '$lib/content';
+	import { site, type PageMeta } from '#lib/content.js';
 
 	type Props = {
 		page: PageMeta;

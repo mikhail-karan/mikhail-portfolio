@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { stack } from '$lib/content';
+	import { stack } from '#lib/content.js';
 </script>
 
 <dl>

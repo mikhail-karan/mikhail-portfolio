@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Prompt from '$lib/components/Prompt.svelte';
-	import { identity } from '$lib/content';
+	import Prompt from '#lib/components/Prompt.svelte';
+	import { identity } from '#lib/content.js';
 </script>
 
 <header class="hero">

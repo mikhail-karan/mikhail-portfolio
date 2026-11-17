@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import Prompt from '$lib/components/Prompt.svelte';
-	import { reveal } from '$lib/actions/reveal';
+	import Prompt from '#lib/components/Prompt.svelte';
+	import { reveal } from '#lib/actions/reveal.js';
 
 	type Props = {
 		id: string;

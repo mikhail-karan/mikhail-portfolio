@@ -16,9 +16,18 @@ const REALM = 'analytics';
  * A prefix test, not equality: SvelteKit also serves the route's load data at
  * `/analytics/private/__data.json`, and that URL returns the same unsuppressed payload as the
  * page. Gating only the exact path would leave the data behind the gate reachable without it.
+ *
+ * The path is decoded first because SvelteKit routes on the decoded path: `/analytics/%70rivate`
+ * resolves to the private route. A malformed escape fails closed.
  */
 export function isPrivateTier(pathname: string): boolean {
-	return pathname === PRIVATE_PATH || pathname.startsWith(`${PRIVATE_PATH}/`);
+	let decoded: string;
+	try {
+		decoded = decodeURIComponent(pathname);
+	} catch {
+		return true;
+	}
+	return decoded === PRIVATE_PATH || decoded.startsWith(`${PRIVATE_PATH}/`);
 }
 
 /** 401 with the challenge browsers need to prompt, and no caching of the rejection. */

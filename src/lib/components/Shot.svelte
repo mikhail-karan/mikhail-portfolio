@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import type { Shot } from '$lib/content';
+	import type { Shot } from '#lib/content.js';
 
 	let { shot }: { shot: Shot } = $props();
 

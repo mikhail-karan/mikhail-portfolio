@@ -1,9 +1,9 @@
 <script lang="ts">
-	import BarTable from '$lib/components/BarTable.svelte';
-	import DailyChart from '$lib/components/DailyChart.svelte';
-	import Head from '$lib/components/Head.svelte';
-	import Prompt from '$lib/components/Prompt.svelte';
-	import { analytics } from '$lib/content';
+	import BarTable from '#lib/components/BarTable.svelte';
+	import DailyChart from '#lib/components/DailyChart.svelte';
+	import Head from '#lib/components/Head.svelte';
+	import Prompt from '#lib/components/Prompt.svelte';
+	import { analytics } from '#lib/content.js';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
